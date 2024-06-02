@@ -6,13 +6,13 @@
 #    By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 18:09:04 by aibn-che          #+#    #+#              #
-#    Updated: 2024/05/30 10:47:08 by aibn-che         ###   ########.fr        #
+#    Updated: 2024/06/02 18:29:07 by aibn-che         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 MSRCS = 	main.c		get_next_line.c		get_next_line_utils.c		init_mlx.c		utils/utils_1.c \
-			utils/utils_2.c		utils/utils_3.c		utils/utils_4.c		\
+			utils/utils_2.c		utils/utils_3.c		utils/utils_4.c		utils/utils_5.c\
 
 MOBJS = $(MSRCS:.c=.o)
 
@@ -23,7 +23,7 @@ CC = cc
 rm = rm -f
 
 NAME = cub
-HEADERS = ./so_long.h ./get_next_line.h
+HEADERS = ./main.h ./get_next_line.h
 
 all : $(NAME)
 

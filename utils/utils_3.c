@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:56:23 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/01 20:32:31 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:26:10 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,23 @@ void	init_turn_and_walk_directions(t_data *data, int key)
 		data->pl->turn_direc = -1;
 	else if (key == RIGHT)
 		data->pl->turn_direc = 1;
+	else if (key == R)
+		data->pl->left_right = 1;
+	else if (key == L)
+		data->pl->left_right = -1;
 	data->pl->move_step = data->pl->walk_direction * data->pl->move_speed;
+	data->pl->fb_x = data->pl->j + cos(data->pl->rt_angle)
+		* data->pl->move_step;
+	data->pl->fb_y = data->pl->i + sin(data->pl->rt_angle)
+		* data->pl->move_step;
+	data->pl->fb_n_x = (data->pl->fb_x + 5);
+	data->pl->fb_n_y = (data->pl->fb_y + 5);
+	data->pl->lr_x = data->pl->j - (sin(data->pl->rt_angle)
+			* data->pl->left_right * data->pl->move_speed);
+	data->pl->lr_y = data->pl->i + (cos(data->pl->rt_angle)
+			* data->pl->left_right * data->pl->move_speed);
+	data->pl->lf_n_x = (data->pl->lr_x + 5);
+	data->pl->lf_n_y = (data->pl->lr_y + 5);
 }
 
 /*
@@ -41,74 +57,61 @@ float	normalize_angle(float angle)
 	return (angle);
 }
 
-// void	setting_pl_direction(float ray_angle, t_pl_dr *pl_dr)
-// {
-// 	int	right;
-
-// 	right = ray_angle < M_PI / 2 || ray_angle > 270 * (M_PI / 180);
-// 	pl_dr->is_ray_facing_down = ray_angle > 0 && ray_angle < M_PI;
-// 	pl_dr->is_ray_facing_up = !(pl_dr->is_ray_facing_down);
-// 	pl_dr->is_ray_facing_right = right;
-// 	pl_dr->is_ray_facing_left = !(pl_dr->is_ray_facing_right);
-// }
-
 int	hit_wall(char **arr, int x, int y, float ray_angle)
 {
 	int		yy;
-	t_pl_dr	*pl_dr;
+	int		xx;
+	t_pl_dr	pl_dr;
 
-	pl_dr = malloc(sizeof(t_pl_dr));
-	setting_pl_direction(ray_angle, pl_dr);
-	if (pl_dr->is_ray_facing_up)
+	setting_pl_direction(ray_angle, &pl_dr);
+	if (pl_dr.is_ray_facing_up)
 		y -= 5;
-	else if (pl_dr->is_ray_facing_down)
+	else if (pl_dr.is_ray_facing_down)
 		y += 5;
-	yy = (y / CUB_SIZE);
+	if (pl_dr.is_ray_facing_right)
+		x += 5;
+	else if (pl_dr.is_ray_facing_left)
+		x -= 5;
+	(1) && (xx = (x / CUB_SIZE), yy = (y / CUB_SIZE));
 	if (yy < 0)
 		yy = 0;
 	else if (map_height(arr) <= yy)
 		yy = map_height(arr) - 1;
-	if (arr[yy][(x / (int)(CUB_SIZE))] == '1' || arr[yy][(x / (int)(CUB_SIZE))] == ' ')
+	if (xx < 0)
+		xx = 0;
+	else if (ft_strlen(arr[yy]) <= xx)
+		xx = ft_strlen(arr[yy]) - 1;
+	if (arr[yy][xx] == '1' || arr[yy][xx] == ' ')
 		return (1);
 	return (0);
 }
 
-// ax  = (py / tan) + px
 void	on_keypress(mlx_key_data_t keydata, void *data)
 {
-	int		x1;
-	int		y1;
-	int		n_x1;
-	int		n_y1;
 	t_data	*dt;
 
-	printf("key == %d\n", keydata.key);
 	dt = (t_data *)data;
 	init_turn_and_walk_directions(dt, keydata.key);
-	x1 = dt->pl->j + cos(dt->pl->rotation_angle) * dt->pl->move_step;
-	y1 = dt->pl->i + sin(dt->pl->rotation_angle) * dt->pl->move_step;
-	n_x1 = (x1 + 5);
-	n_y1 = (y1 + 5);
 	if (keydata.key == 256)
 		ft_error(dt, 2, 1);
 	if (keydata.key == LEFT || keydata.key == RIGHT)
 	{
-		dt->pl->rotation_angle += dt->pl->turn_direc * dt->pl->rotation_speed;
-		dt->pl->rotation_angle = normalize_angle(dt->pl->rotation_angle);
+		dt->pl->rt_angle += dt->pl->turn_direc * dt->pl->rotation_speed;
+		dt->pl->rt_angle = normalize_angle(dt->pl->rt_angle);
 	}
 	else if ((keydata.key == UP || keydata.key == DOWN)
-		&& !hit_wall(dt->arr, x1, y1, dt->pl->rotation_angle) 
-		&& !hit_wall(dt->arr, n_x1, n_y1, dt->pl->rotation_angle))
+		&& !hit_wall(dt->arr, dt->pl->fb_x, dt->pl->fb_y, dt->pl->rt_angle)
+		&& !hit_wall(dt->arr, dt->pl->fb_n_x, dt->pl->fb_n_y, dt->pl->rt_angle))
 	{
-		dt->pl->j = dt->pl->j + cos(dt->pl->rotation_angle) * dt->pl->move_step;
-		dt->pl->i = dt->pl->i + sin(dt->pl->rotation_angle) * dt->pl->move_step;
+		dt->pl->i = dt->pl->i + sin(dt->pl->rt_angle) * dt->pl->move_step;
+		dt->pl->j = dt->pl->j + cos(dt->pl->rt_angle) * dt->pl->move_step;
 	}
-	else if (keydata.key == R)
+	else if ((keydata.key == R || keydata.key == L)
+		&& !hit_wall(dt->arr, dt->pl->lr_x, dt->pl->lr_y, dt->pl->rt_angle)
+		&& !hit_wall(dt->arr, dt->pl->lf_n_x, dt->pl->lf_n_y, dt->pl->rt_angle))
 	{
-		// int a;
-		// a = (dt->pl->j / CUB_SIZE) - 1;
-		dt->pl->j = (1 - dt->pl->i / tan(dt->pl->rotation_angle)) + dt->pl->j;
-		// dt->pl->i -= 5;
+		dt->pl->j = dt->pl->lr_x;
+		dt->pl->i = dt->pl->lr_y;
 	}
 }
 

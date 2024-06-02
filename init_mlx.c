@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:28:26 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/05/31 18:51:39 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:25:31 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ t_player	*init_player(void)
 		return (NULL);
 	pl->i = 0;
 	pl->j = 0;
-	pl->rotation_angle = 60 * (M_PI / 180);
+	pl->rt_angle = 60 * (M_PI / 180);
 	pl->rotation_speed = 5 * (M_PI / 180);
 	pl->turn_direc = 0;
 	pl->walk_direction = 0;
 	pl->move_speed = 20;
-	pl->move_step = pl->walk_direction * pl->move_speed;
+	pl->move_step = 0;
+	pl->left_right = 0;
 	return (pl);
 }
 

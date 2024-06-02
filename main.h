@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:15:02 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/01 16:26:43 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/02 19:03:09 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <math.h>
 # include <string.h>
 # include <errno.h>
-# include <float.h>
+# include <limits.h>
 # include "/Users/aibn-che/MLX42/include/MLX42/MLX42.h"
 
 # define RED 0xFF0000FF
@@ -30,8 +30,8 @@
 
 # define LEFT 263
 # define RIGHT 262
-# define UP 265
-# define DOWN 264
+# define UP 87
+# define DOWN 83
 # define R 68
 # define L 65
 
@@ -95,11 +95,31 @@ typedef struct player
 	float		j;
 	int			turn_direc; // right || left
 	float		rotation_speed;
-	float		rotation_angle;
+	float		rt_angle;
 	int			walk_direction;
 	int			move_speed;
 	int			move_step;
-}	t_player;
+	int			left_right;
+	int			fb_x;
+	int			fb_y;
+	int			fb_n_x;
+	int			fb_n_y;
+	int			lr_x;
+	int			lr_y;
+	int			lf_n_x;
+	int			lf_n_y;
+}		t_player;
+
+typedef struct wall_info
+{
+	int		wall_strip_height;
+	int		wall_top_pixel;
+	int		wall_bottom_pixel;
+	float	perp_distance;
+	float	distance_proj_plane;
+	float	projected_wall_height;
+	int		ds;
+}		t_wall;
 
 typedef struct s_data
 {
@@ -111,13 +131,7 @@ typedef struct s_data
 	int			height;
 	mlx_image_t	*img;
 	t_player	*pl;
-
-	void		*img_ptr;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-}			t_data;
+}		t_data;
 
 typedef struct Ray
 {
@@ -131,7 +145,7 @@ typedef struct Ray
 	int		is_ray_facing_left;
 	int		is_ray_facing_right;
 	int		wall_hit_content;
-}			t_rays;
+}		t_rays;
 
 typedef struct player_direction
 {
@@ -139,7 +153,7 @@ typedef struct player_direction
 	int	is_ray_facing_up;
 	int	is_ray_facing_right;
 	int	is_ray_facing_left;
-}			t_pl_dr;
+}		t_pl_dr;
 
 // Utils/utils_1.c
 void	free_to_d_arr(char **arr);
@@ -161,9 +175,13 @@ void	on_keypress(mlx_key_data_t keydata, void *data);
 void	render_loop(void *dt);
 
 // Utils/utils_4.c
+float	closest_wall_intersection(t_data *data, float ray_angle, t_rays *rays);
+
+// Utils/utils_5.c
 void	setting_pl_direction(float ray_angle, t_pl_dr *pl_dr);
+void	paint_ciel_floor(t_data *data);
 void	render_3d_view(t_data *data);
-void	render_pixels(char **rows, t_data *data);
+int		ft_strlen(char *str);
 
 // init_mlx.c
 void	fill_data(t_data *data, char **arr);
