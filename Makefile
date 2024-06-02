@@ -13,7 +13,7 @@
 
 MSRCS = 	main.c		get_next_line.c		get_next_line_utils.c		init_mlx.c		utils/utils_1.c \
 			utils/utils_2.c		utils/utils_3.c		utils/utils_4.c		\
-
+			parsing/parsing.c	parsing/file1.c
 MOBJS = $(MSRCS:.c=.o)
 
 CFLAGS =  -fsanitize=address -g -O3
@@ -22,8 +22,8 @@ CC = cc
 
 rm = rm -f
 
-NAME = cub
-HEADERS = ./so_long.h ./get_next_line.h
+NAME = cub3D
+HEADERS = ./cub3D.h  ./get_next_line.h
 
 all : $(NAME)
 

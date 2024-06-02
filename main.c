@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "cub3D.h"
 
 void	add_to_list(char *line, t_mp **head)
 {
@@ -69,19 +69,22 @@ void	render_map(char **rows)
 	mlx_loop(data->mlx_ptr);
 	mlx_terminate(data->mlx_ptr);
 }
-
-int	main(void)
+int	main(int ac, char **av)
 {
-	int		file;
+	int		fd;
 	char	*str;
 	t_mp	*lines;
 	char	**rows;
+	t_list  *var;
+
 	int		i;
 
+
 	i = 0;
-	file = open("./map2.cub", O_RDONLY);
-	lines = accumulate_lines(file);
-	rows = conver_to_2d_array(lines);
+
+	rows = ft_parsing(ac, av, rows, var);
+	// lines = accumulate_lines(fd);
+	// rows = conver_to_2d_array(lines);
 	while (rows && rows[i])
 	{
 		printf("%s", rows[i]);
@@ -90,3 +93,24 @@ int	main(void)
 	render_map(rows);
 	return (0);
 }
+
+// int	main(void)
+// {
+// 	int		file;
+// 	char	*str;
+// 	t_mp	*lines;
+// 	char	**rows;
+// 	int		i;
+
+// 	i = 0;
+// 	file = open("./map2.cub", O_RDONLY);
+// 	lines = accumulate_lines(file);
+// 	rows = conver_to_2d_array(lines);
+// 	while (rows && rows[i])
+// 	{
+// 		printf("%s", rows[i]);
+// 		i++;
+// 	}
+// 	render_map(rows);
+// 	return (0);
+// }

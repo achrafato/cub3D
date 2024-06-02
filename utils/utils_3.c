@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "../cub3D.h"
 
 void	init_turn_and_walk_directions(t_data *data, int key)
 {
@@ -28,7 +28,7 @@ void	init_turn_and_walk_directions(t_data *data, int key)
 /*
 	- fmod(angle, TWO_PI)` ensures that the angle is kept within the range
 		of a full circle, which is \(0\) to \(2\pi\) radians
-	
+
 	- If the angle is negative, shift it to the positive range [0, 2π)
 */
 float	normalize_angle(float angle)
@@ -97,7 +97,7 @@ void	on_keypress(mlx_key_data_t keydata, void *data)
 		dt->pl->rotation_angle = normalize_angle(dt->pl->rotation_angle);
 	}
 	else if ((keydata.key == UP || keydata.key == DOWN)
-		&& !hit_wall(dt->arr, x1, y1, dt->pl->rotation_angle) 
+		&& !hit_wall(dt->arr, x1, y1, dt->pl->rotation_angle)
 		&& !hit_wall(dt->arr, n_x1, n_y1, dt->pl->rotation_angle))
 	{
 		dt->pl->j = dt->pl->j + cos(dt->pl->rotation_angle) * dt->pl->move_step;
