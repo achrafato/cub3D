@@ -6,7 +6,7 @@
 #    By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 18:09:04 by aibn-che          #+#    #+#              #
-#    Updated: 2024/06/02 18:29:07 by aibn-che         ###   ########.fr        #
+#    Updated: 2024/06/02 23:06:43 by aibn-che         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ MSRCS = 	main.c		get_next_line.c		get_next_line_utils.c		init_mlx.c		utils/utils
 
 MOBJS = $(MSRCS:.c=.o)
 
-CFLAGS =  -fsanitize=address -g -O3
+# CFLAGS =  -fsanitize=address -g -O3
 
 CC = cc
 

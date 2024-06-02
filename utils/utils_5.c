@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:28:24 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/02 18:41:59 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:57:43 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,15 @@ void	build_walls(t_data *data, float ray_angle, t_rays *rays, int i)
 void	render_3d_view(t_data *data)
 {
 	int		i;
-	t_rays	*rays;
+	t_rays	rays;
 	float	ray_angle;
 
 	i = 0;
 	paint_ciel_floor(data);
-	rays = malloc(sizeof(t_rays));
-	if (!rays)
-		return ;
 	ray_angle = data->pl->rt_angle - (FOV / 2);
 	while (i < WIDTH)
 	{
-		build_walls(data, ray_angle, rays, i);
+		build_walls(data, ray_angle, &rays, i);
 		ray_angle += (FOV / (float)WIDTH);
 		i++;
 	}

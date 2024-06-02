@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:35:20 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/05/30 11:51:16 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/02 23:06:37 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_error(t_data *data, int a, int c)
 	if (a == 2)
 	{
 		if (c)
-			exit(EXIT_SUCCESS);
+			exit(EXIT_FAILURE);
 		printf("%s\n", strerror(errno));
 	}
 	exit(EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:09:20 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/05/31 21:45:09 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/02 23:12:14 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ t_mp	*accumulate_lines(int fd)
 	return (head);
 }
 
+void	close_window(void	*dt)
+{
+	t_data	*data;
+
+	data = (t_data *)dt;
+	ft_error(data, 2, 1);
+}
+
 void	render_map(char **rows)
 {
 	t_data	*data;
@@ -66,8 +74,14 @@ void	render_map(char **rows)
 		ft_error(data, 2, 0);
 	mlx_key_hook(data->mlx_ptr, on_keypress, data);
 	mlx_loop_hook(data->mlx_ptr, render_loop, data);
+	mlx_close_hook(data->mlx_ptr, close_window, data);
 	mlx_loop(data->mlx_ptr);
 	mlx_terminate(data->mlx_ptr);
+}
+
+void test_leak()
+{
+	system("leaks cub");
 }
 
 int	main(void)
@@ -78,15 +92,16 @@ int	main(void)
 	char	**rows;
 	int		i;
 
+	atexit(&test_leak);
 	i = 0;
 	file = open("./map2.cub", O_RDONLY);
 	lines = accumulate_lines(file);
 	rows = conver_to_2d_array(lines);
-	while (rows && rows[i])
-	{
-		printf("%s", rows[i]);
-		i++;
-	}
+	// while (rows && rows[i])
+	// {
+	// 	printf("%s", rows[i]);
+	// 	i++;
+	// }
 	render_map(rows);
 	return (0);
 }
