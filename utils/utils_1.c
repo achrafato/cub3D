@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:35:20 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/02 23:06:37 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/02 23:28:32 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	ft_error(t_data *data, int a, int c)
 			free_to_d_arr(data->arr);
 		if (data->pl)
 			free(data->pl);
+		mlx_delete_image(data->mlx_ptr, data->image);
+		mlx_terminate(data->mlx_ptr);
 		free(data);
 	}
 	if (a == 1)
