@@ -73,6 +73,22 @@ typedef struct s_list
 }	t_list;
 
 
+
+typedef struct s_pars
+{
+
+	int len;
+	int no;
+	int so;
+	int ea;
+	int we;
+	int f;
+	int c;
+	int fd;
+	char *name;
+}	t_pars;
+
+
 typedef struct horizontal_data
 {
 	int		x;
@@ -129,6 +145,8 @@ typedef struct s_data
 	int			height;
 	mlx_image_t	*img;
 	t_player	*pl;
+	t_pars	*pars;
+	t_list *lst;
 
 	// void		*img_ptr;
 	// char		*addr;
@@ -207,15 +225,6 @@ void	ft_lstadd_back(t_list **lst, t_list *new1);
 t_list	*ft_lstnew(char **arr);
 int	ft_isalpha(int c);
 int	ft_strcmp(char *s1, char *s2);
-
-char **ft_parsing(int ac, char **av, char **rows, t_list *var);
-
-// utils
-
-
-
-//-----------------------parsing---------------------
-
 int		str_len(char *str);
 char	*str_join(char **s1, char *s2);
 int		encounter_space(char *str);
@@ -223,6 +232,35 @@ char	*substring(char *s, int index);
 void	handle_nl(char **container, char *buffer, char **keeper);
 void	mingle_data(char **container, char **buffer, char **keeper);
 char	*get_next_line(int fd);
+
+
+
+
+//-----------------------parsing---------------------
+
+
+int	ft_check_char(int c, int set);
+
+void ft_check_first_last(char **arr, t_pars *pars);
+void	ft_check_map(char **arr, t_pars *pars);
+
+int ft_len_of_map(int fd, char *str);
+char **ft_alloc_for_map(t_pars *pars, t_list *var);
+
+int	check_extention(char *str1, char *str2);
+char	*ft_remove_nl(char *str) ;// check to remove it
+int	ft_strcmp(char *s1, char *s2);
+
+
+
+
+void ft_check_direction(char **arr, t_data *data);
+
+
+
+char **ft_parsing(int ac, char **rows, t_data *data);
+
+
 
 
 

@@ -11,34 +11,31 @@
 # **************************************************************************** #
 
 
-MSRCS = 	main.c		get_next_line.c		get_next_line_utils.c		init_mlx.c		utils/utils_1.c \
-			utils/utils_2.c		utils/utils_3.c		utils/utils_4.c		\
-			parsing/parsing.c	parsing/file1.c
-MOBJS = $(MSRCS:.c=.o)
-
-CFLAGS =  -fsanitize=address -g -O3
-
-CC = cc
-
-rm = rm -f
-
 NAME = cub3D
-HEADERS = ./cub3D.h  ./get_next_line.h
+OBJ =		gnl/get_next_line.o		gnl/get_next_line_utils.o		init_mlx.o		utils/utils_1.o \
+			utils/utils_2.o		utils/utils_3.o		utils/utils_4.o		\
+			parsing/parsing.o	parsing/libft.o		parsing/check_map.o \
+			parsing/direction.o 	parsing/extention.o \
+			main.o \
 
-all : $(NAME)
 
-%.o: %.c $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@
+CC = cc -fsanitize=address -g
+# FLAGS = -Wall -Werror -Wextra
 
-$(NAME):  $(MOBJS)
-	$(CC) $(CFLAGS) $^ /Users/$(USER)/MLX42/build/libmlx42.a  -Iinclude -lglfw -L"/Users/$(USER)/homebrew/opt/glfw/lib/" -o $(NAME)
 
-# $(CC) $(CFLAGS) $^ -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+all: $(NAME)
 
-clean :
-	$(rm) $(MOBJS)
+$(NAME): $(OBJ) $(LIBFT_SRCS)
+	$(CC) $(CFLAGS) $^ /Users/$(USER)/MLX42/build/libmlx42.a -Iinclude -lglfw -L"/Users/$(USER)/homebrew/opt/glfw/lib/" -o $(NAME)
 
-fclean : clean
-	$(rm) $(NAME)
 
-re : fclean $(NAME)
+%.o: %.c cub3D.h Makefile
+	$(CC) $(FLAGS)  -c $< -o $@
+
+clean:
+	rm -rf $(OBJ)
+
+fclean: clean
+	rm -rf $(NAME)
+
+re: fclean all

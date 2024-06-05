@@ -53,13 +53,13 @@ t_mp	*accumulate_lines(int fd)
 	return (head);
 }
 
-void	render_map(char **rows)
+void	render_map(char **rows, t_data *data)
 {
-	t_data	*data;
+	// t_data	*data;
 
-	data = malloc(sizeof(t_data));
-	if (!data)
-		ft_error(NULL, 2, 0);
+	// data = malloc(sizeof(t_data));
+	// if (!data)
+	// 	ft_error(NULL, 2, 0);
 	fill_data(data, rows);
 	data->img = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	if (!data->img || (mlx_image_to_window(data->mlx_ptr, data->img, 0, 0) < 0))
@@ -69,48 +69,42 @@ void	render_map(char **rows)
 	mlx_loop(data->mlx_ptr);
 	mlx_terminate(data->mlx_ptr);
 }
-int	main(int ac, char **av)
+
+t_data *ft_init(t_data *data, char **av)
 {
-	int		fd;
-	char	*str;
-	t_mp	*lines;
-	char	**rows;
-	t_list  *var;
+	data = malloc(sizeof(t_data));
+	if (!data)
+		ft_error(NULL, 2, 0);
+	data->pars = malloc(sizeof(t_pars));
+	if (!data->pars)
+		ft_error(NULL, 2, 0); // check this
+	data->pars->c = 0;
+	data->pars->ea = 0;
+	data->pars->so = 0;
+	data->pars->no = 0;
+	data->pars->we = 0;
+	data->pars->f = 0;
+	data->pars->name = av[1];
+	return data;
 
-	int		i;
-
-
-	i = 0;
-
-	rows = ft_parsing(ac, av, rows, var);
-	// lines = accumulate_lines(fd);
-	// rows = conver_to_2d_array(lines);
-	while (rows && rows[i])
-	{
-		printf("%s", rows[i]);
-		i++;
-	}
-	render_map(rows);
-	return (0);
 }
 
-// int	main(void)
-// {
-// 	int		file;
-// 	char	*str;
-// 	t_mp	*lines;
-// 	char	**rows;
-// 	int		i;
+int	main(int ac, char **av)
+{
+	t_mp	*lines;
+	char	**rows;
+	t_data	*data;
+	if (ac != 2)
+		exit(1);
 
-// 	i = 0;
-// 	file = open("./map2.cub", O_RDONLY);
-// 	lines = accumulate_lines(file);
-// 	rows = conver_to_2d_array(lines);
-// 	while (rows && rows[i])
-// 	{
-// 		printf("%s", rows[i]);
-// 		i++;
-// 	}
-// 	render_map(rows);
-// 	return (0);
-// }
+
+
+	data = ft_init(data, av);
+	// printf("%p\n", data);
+	rows = ft_parsing(ac, rows, data);
+	if(!rows)
+		return 1;
+	// printf("&&&&&&&&&&%p\n", rows);
+	render_map(rows, data);
+	return (0);
+}

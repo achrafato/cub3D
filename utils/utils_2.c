@@ -34,6 +34,7 @@ int	len_of_current_row(char *str)
 {
 	int	i;
 
+	i = 0;
 	while (str && str[i])
 	{
 		i++;

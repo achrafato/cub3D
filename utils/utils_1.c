@@ -66,11 +66,11 @@ int	max_width(char **rows)
 	int	i;
 
 	i = 1;
-	max = str_len(rows[0]);
+	max = ft_strlen(rows[0]);
 	while (rows && rows[i])
 	{
-		if (str_len(rows[i]) > max)
-			max = str_len(rows[i]);
+		if (ft_strlen(rows[i]) > max)
+			max = ft_strlen(rows[i]);
 		i++;
 	}
 	return (max);
