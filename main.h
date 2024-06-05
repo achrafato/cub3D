@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:15:02 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/04 10:53:11 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:54:39 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct player
 	int			lr_y;
 	int			lf_n_x;
 	int			lf_n_y;
+	int			player;
 }		t_player;
 
 typedef struct wall_info

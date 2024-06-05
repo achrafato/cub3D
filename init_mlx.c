@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:28:26 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/04 10:29:12 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:03:42 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,19 @@ t_player	*init_player(void)
 	return (pl);
 }
 
-void	player_position(char **rows, int *x, int *y)
+void	update_player_rotation(t_player *pl, char player)
+{
+	if (player == 'E')
+		pl->rt_angle = 0 * (M_PI / 180);
+	else if (player == 'N')
+		pl->rt_angle = 90 * (M_PI / 180);
+	else if (player == 'S')
+		pl->rt_angle = 180 * (M_PI / 180);
+	else if (player == 'W')
+		pl->rt_angle = 270 * (M_PI / 180);
+}
+
+void	player_position(char **rows, int *x, int *y, t_player *pl)
 {
 	int	i;
 	int	j;
@@ -46,10 +58,11 @@ void	player_position(char **rows, int *x, int *y)
 		j = 0;
 		while (rows[i][j])
 		{
-			if (rows[i][j] == 'P')
+			if (rows[i][j] == 'N' || rows[i][j] == 'W' || rows[i][j] == 'E' || rows[i][j] == 'S')
 			{
 				*y = i;
 				*x = j;
+				update_player_rotation(pl, rows[i][j]);
 				break ;
 			}
 			j++;
@@ -97,7 +110,7 @@ void	fill_data(t_data *data, char **arr)
 	data->pl = init_player();
 	if (!data->pl)
 		ft_error(data, 2, 0);
-	player_position(arr, &j, &i);
+	player_position(arr, &j, &i, data->pl);
 	data->pl->i = i * CUB_SIZE;
 	data->pl->i += 32;
 	data->pl->j = j * CUB_SIZE;
