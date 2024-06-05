@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:40:48 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/02 18:28:06 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:53:22 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	len_of_current_row(char *str)
 {
 	int	i;
 
+	i = 0;
 	while (str && str[i])
 	{
 		i++;
@@ -44,7 +45,7 @@ int	len_of_current_row(char *str)
 void	amend_cordinations(int *x, int *y, char **arr)
 {
 	if (*y < 0)
-		*y *= -1;
+		*y = 0;
 	if (*y >= map_height(arr))
 		*y = map_height(arr) - 1;
 	if ((len_of_current_row(arr[*y]) <= *x) && *x != 0)

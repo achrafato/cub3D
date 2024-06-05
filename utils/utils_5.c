@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:28:24 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/02 22:57:43 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:53:43 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,31 @@ void	paint_ciel_floor(t_data *data)
 	}
 }
 
+
+    // img = ft_get_texture(cube, strip_id);
+    // img_px = (int32_t *)img->pixels;
+    // offset = (float)(img->height / strip_wall_height);
+    // xcord = get_xcord(cube, strip_id, img);
+    // ycord = (walltop_to_px - (HEIGHT / 2.0) + (strip_wall_height / 2)) * offset;
+    // if (ycord < 0)
+    //     ycord = 0;
+    // while (walltop_to_px < wallbottom_to_px)
+    // {
+    //     mlx_put_pixel(cube->img, strip_id, walltop_to_px, \
+    //         ft_reverse_color(img_px[((int)ycord * img->width) + (int)xcord]));
+    //     ycord += offset;
+    //     walltop_to_px++;
+    // }
+
 void	build_walls(t_data *data, float ray_angle, t_rays *rays, int i)
 {
 	t_wall	wall;
+
+	mlx_texture_t	*img;
+	int32_t			*img_px;
+	float			offset;
+	float			xcord;
+	float			ycord;
 
 	wall.ds = closest_wall_intersection(data, ray_angle, rays);
 	wall.perp_distance = wall.ds * cos(ray_angle - data->pl->rt_angle);
@@ -62,27 +84,43 @@ void	build_walls(t_data *data, float ray_angle, t_rays *rays, int i)
 		* wall.distance_proj_plane;
 	wall.wall_strip_height = (int)wall.projected_wall_height;
 	wall.wall_top_pixel = (HEIGHT / 2) - (wall.wall_strip_height / 2);
+
+
+	//////////////////////////////////////////////////
+	img = ft_get_texture(data, rays);
+	img_px = (int32_t *)img->pixels;
+	offset = (float)((float)img->height / (float)wall.wall_strip_height);
+	xcord = get_xcord(rays, img);
 	if (wall.wall_top_pixel < 0)
 		wall.wall_top_pixel = 0;
+	ycord = ((float)wall.wall_top_pixel - (HEIGHT / 2.0) + ((float)wall.wall_strip_height / 2)) * offset;
+	if (ycord < 0)
+		ycord = 0;
+
+	//////////////////////////////////////////////////
+
+
 	wall.wall_bottom_pixel = (HEIGHT / 2) + (wall.wall_strip_height / 2);
 	if (wall.wall_bottom_pixel > HEIGHT)
 		wall.wall_bottom_pixel = HEIGHT;
 	while (wall.wall_top_pixel < wall.wall_bottom_pixel)
 	{
 		mlx_put_pixel(data->img, i, wall.wall_top_pixel, \
-		rgba(146, 192, 132, 100));
+		ft_reverse_color(img_px[((int)ycord * img->width) + (int)xcord]));
+		ycord += offset;
 		(wall.wall_top_pixel)++;
 	}
+	data->wall = wall;
 }
 
 void	render_3d_view(t_data *data)
 {
-	int		i;
-	t_rays	rays;
-	float	ray_angle;
+	int				i;
+	t_rays			rays;
+	float			ray_angle;
 
 	i = 0;
-	paint_ciel_floor(data);
+	paint_ciel_floor(data);	
 	ray_angle = data->pl->rt_angle - (FOV / 2);
 	while (i < WIDTH)
 	{

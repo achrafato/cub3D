@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:35:20 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/02 23:28:32 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:15:12 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,21 @@ void	free_to_d_arr(char **arr)
 void	ft_error(t_data *data, int a, int c)
 {
 	char	*err;
+	int		i;
 
+	i = 0;
 	if (data)
 	{
 		if (data->arr)
 			free_to_d_arr(data->arr);
 		if (data->pl)
 			free(data->pl);
+		if (data->pngs)
+		{
+			while (i < 4)
+				mlx_delete_texture(data->pngs[i++]);
+			free(data->pngs);
+		}
 		mlx_delete_image(data->mlx_ptr, data->image);
 		mlx_terminate(data->mlx_ptr);
 		free(data);

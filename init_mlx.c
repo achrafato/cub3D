@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:28:26 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/02 22:08:52 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:29:12 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,29 @@ void	player_position(char **rows, int *x, int *y)
 	}
 }
 
+mlx_texture_t	**load_pictures(void)
+{
+	mlx_texture_t	**pngs;
+	int				i;
+	char			*arr[4];
+
+	pngs = NULL;
+	arr[0] = "./textures/image_1.png";
+	arr[1] = "./textures/image_2.png";
+	arr[2] = "./textures/image_5.png";
+	arr[3] = "./textures/image_3.png";
+	i = 0;
+	pngs = malloc(sizeof(mlx_texture_t *) * 4);
+	if (!pngs)
+		return (NULL);
+	while (i < 4)
+	{
+		pngs[i] = mlx_load_png(arr[i]);
+		i++;
+	}
+	return (pngs);
+}
+
 void	fill_data(t_data *data, char **arr)
 {
 	int	i;
@@ -79,4 +102,7 @@ void	fill_data(t_data *data, char **arr)
 	data->pl->i += 32;
 	data->pl->j = j * CUB_SIZE;
 	data->pl->j += 32;
+	data->pngs = load_pictures();
+	if (!data->pngs)
+		ft_error(data, 2, 1);
 }

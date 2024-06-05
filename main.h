@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:15:02 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/02 19:03:09 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:53:11 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,15 +123,25 @@ typedef struct wall_info
 
 typedef struct s_data
 {
-	mlx_t		*mlx_ptr;
-	void		*win_ptr;
-	void		*image;
-	char		**arr;
-	int			width;
-	int			height;
-	mlx_image_t	*img;
-	t_player	*pl;
+	mlx_t			*mlx_ptr;
+	void			*win_ptr;
+	void			*image;
+	char			**arr;
+	int				width;
+	int				height;
+	mlx_image_t		*img;
+	mlx_texture_t	**pngs;
+	t_player		*pl;
+	t_wall			wall;
 }		t_data;
+
+typedef struct Colors
+{
+	unsigned int	a;
+	unsigned int	r;
+	unsigned int	b;
+	unsigned int	g;
+}	t_rgba;
 
 typedef struct Ray
 {
@@ -140,6 +150,7 @@ typedef struct Ray
 	float	wall_hit_y;
 	float	distance;
 	int		was_hit_vertical;
+	int		was_hit_horizontal;
 	int		is_ray_facing_up;
 	int		is_ray_facing_down;
 	int		is_ray_facing_left;
@@ -182,6 +193,11 @@ void	setting_pl_direction(float ray_angle, t_pl_dr *pl_dr);
 void	paint_ciel_floor(t_data *data);
 void	render_3d_view(t_data *data);
 int		ft_strlen(char *str);
+
+// Utils/utils_6.c
+mlx_texture_t	*ft_get_texture(t_data *data, t_rays *rays);
+float	get_xcord(t_rays *rays, mlx_texture_t *img);
+int32_t	ft_reverse_color(int32_t colors);
 
 // init_mlx.c
 void	fill_data(t_data *data, char **arr);

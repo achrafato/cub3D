@@ -6,11 +6,12 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:56:23 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/02 23:13:33 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/05 00:12:25 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
+#include <math.h>
 
 void	init_turn_and_walk_directions(t_data *data, int key)
 {

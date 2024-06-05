@@ -6,19 +6,18 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:18:49 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/02 18:47:03 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:14:17 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../main.h"
-#include <math.h>
 
 /*
 	calculate the distance between each horizontal point
 		* ystep : represent the next Vertical step
 		* xstep : represent the next Horizontal step
 	
-	found_horz_wall_hit : this var indicate whether or not player
+	was_hit_horizontal : this var indicate whether or not player
 						is collided with wall
 */
 void	calc_dis_bt_ech_hr_point(t_pl_dr pl_dr, float ray_angle, t_hr_data *hr)
@@ -144,8 +143,21 @@ float	closest_wall_intersection(t_data *data, float ray_angle, t_rays *rays)
 		vert_hit_distance = distance_between_points(vr.px, vr.py, \
 		vr.wallhit_x_v, vr.wallhit_y_v);
 	if (vert_hit_distance < horz_hit_distance)
+	{
 		rays->distance = vert_hit_distance;
+		rays->was_hit_vertical = 1;
+		rays->was_hit_horizontal = 0;
+		rays->wall_hit_x = vr.wallhit_x_v;
+		rays->wall_hit_y = vr.wallhit_y_v;
+	}
 	else
+	{
 		rays->distance = horz_hit_distance;
+		rays->was_hit_horizontal = 1;
+		rays->was_hit_vertical = 0;
+		rays->wall_hit_x = hr.wallhit_x_h;
+		rays->wall_hit_y = hr.wallhit_y_h;
+	}
+	rays->ray_angle = ray_angle;
 	return (rays->distance);
 }
