@@ -97,8 +97,6 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		exit(1);
 
-
-
 	data = ft_init(data, av);
 	if(!data)
 		return 1;

@@ -85,6 +85,7 @@ typedef struct s_pars
 	int f;
 	int c;
 	int fd;
+	int Y;
 	char *name;
 }	t_pars;
 
@@ -209,8 +210,7 @@ void	render_pixels(char **rows, t_data *data);
 
 void	fill_data(t_data *data, char **arr);
 
-//-----------------------parsing---------------------
-
+//-----------------------libft---------------------
 
 int	check_extention(char *str1, char *str2);
 size_t	ft_strlen(const char *s);
@@ -233,38 +233,39 @@ void	handle_nl(char **container, char *buffer, char **keeper);
 void	mingle_data(char **container, char **buffer, char **keeper);
 char	*get_next_line(int fd);
 
-
+int	ft_atoi(const char *str);
+int ft_isdigit(int c);
+int	ft_strcmp(char *s1, char *s2);
 
 
 //-----------------------parsing---------------------
 
-
-int	ft_check_char(int c, int set);
-
-void ft_check_first_last(char **arr, t_pars *pars);
-void	ft_check_map(char **arr, t_pars *pars);
-
 int ft_len_of_map(int fd, char *str);
 char **ft_alloc_for_map(t_pars *pars, t_list *var);
+char **ft_parsing(int ac, char **rows, t_data *data);
 
-int	check_extention(char *str1, char *str2);
+
+//-----------------------open_img---------------------
+
+int ft_check_rgb(char *str);
+void ft_free(char **str);
+void ft_open_img(t_data *data);
+
+//-----------------------check_extention---------------------
+
 char	*ft_remove_nl(char *str) ;// check to remove it
-int	ft_strcmp(char *s1, char *s2);
+int	check_extention(char *str1, char *str2);
 
+//-----------------------direction---------------------
 
-
-
+void ft_check_duplicate(char *str, t_pars *pars);
 void ft_check_direction(char **arr, t_data *data);
 
+//-----------------------check_map---------------------
 
-
-char **ft_parsing(int ac, char **rows, t_data *data);
-int	ft_atoi(const char *str);
-
-
-int ft_isdigit(int c);
-
-
-
+int	ft_check_char(char c);
+void ft_check_first_last(char **arr, t_pars *pars);
+void	ft_check_map(char **arr, t_data *data);
 
 #endif
+

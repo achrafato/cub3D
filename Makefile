@@ -15,7 +15,7 @@ NAME = cub3D
 OBJ =		gnl/get_next_line.o		gnl/get_next_line_utils.o		init_mlx.o		utils/utils_1.o \
 			utils/utils_2.o		utils/utils_3.o		utils/utils_4.o		\
 			parsing/parsing.o	parsing/libft.o		parsing/check_map.o \
-			parsing/direction.o 	parsing/extention.o \
+			parsing/direction.o 	parsing/extention.o		parsing/open_img.o \
 			main.o \
 
 
