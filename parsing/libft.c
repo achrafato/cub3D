@@ -8,19 +8,24 @@ int	ft_isalpha(int c)
 	return (0);
 }
 
-
+int ft_isdigit(int c)
+{
+	if (c >= '0'  && c <= '9')
+			return 1;
+	return 0;
+}
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*current;
 
-	if (!*lst)
+	if (!lst || !*lst)
 	{
 		*lst = new;
 		return ;
 	}
 	current = *lst;
-	while (current->next != NULL)
+	while (current && current->next != NULL)
 		current = current->next;
 	current->next = new;
 }
@@ -114,7 +119,30 @@ int	ft_lstsize(t_list *lst)
 	return (i);
 }
 
+int	ft_atoi(const char *str) // check this 
+{
+	int		sign;
+	long	res;
 
+	sign = 1;
+	res = 0;
+	while (str && *str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (str && *str == '-' || *str == '+' )
+	{
+		if (*str == '-')
+			sign *= -1 ;
+		str++;
+	}
+	while (str && *str >= '0' && *str <= '9')
+	{
+		res = 10 * res + (*str - '0');
+		if ((sign == 1 && res > 2147483647) || (sign == -1 && res > 2147483648))
+			return (-1);
+		str++;
+	}
+	return ((int)res * sign);
+}
 void	*ft_memcpy(void *dest1, const void *src1, size_t n)
 {
 	size_t		i;

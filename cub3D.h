@@ -259,9 +259,10 @@ void ft_check_direction(char **arr, t_data *data);
 
 
 char **ft_parsing(int ac, char **rows, t_data *data);
+int	ft_atoi(const char *str);
 
 
-
+int ft_isdigit(int c);
 
 
 

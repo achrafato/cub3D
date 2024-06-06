@@ -21,7 +21,6 @@ void	ft_stor_direction(char *line, t_data *data)
 	t_list *tmp;
 	tmp = data->lst;
 
-	data->lst = NULL;
 	arr = ft_split(line, ' ');
 	if (!arr)
 		return ;
@@ -39,6 +38,7 @@ void ft_check_direction(char **arr, t_data *data)
 {
 	char *line;
 	char *tmp;
+	data->lst = NULL;
 
 	line = get_next_line(data->pars->fd);
 	while(line)
