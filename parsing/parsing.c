@@ -30,8 +30,8 @@ char **ft_alloc_for_map(t_pars *pars, t_list *var)
 	char	*line;
 	char	**rows;
 	char	*tmp;
-
 	pars->len  = ft_len_of_map(pars->fd, pars->name);
+
 	n = 0;
 	rows = malloc(sizeof(char *) * (pars->len + 1));
 	if (!rows)
@@ -100,7 +100,7 @@ void ft_open_img(t_data *data)
 		}
 		else
 			if (open(tmp->value, O_RDONLY) == -1)
-				(write(2, "Error during opening img\n", 25), exit(1));
+					(write(2, "Error during opening img\n", 25), exit(1));
 		tmp = tmp->next;
 	}
 }
@@ -111,7 +111,8 @@ char	**ft_parsing(int ac, char **rows, t_data *data)
 
 	i = 0;
 
-	if (open(data->pars->name, O_RDONLY) == -1)
+	data->pars->fd = open(data->pars->name, O_RDONLY);
+	if (data->pars->fd == -1)
 		(write(2, "Error during opening file\n", 26), exit(1));
 	if (check_extention(data->pars->name, ".cub") != 0)
 		(write(2, "Error Invalid extention\n", 26), exit(1));
@@ -119,7 +120,7 @@ char	**ft_parsing(int ac, char **rows, t_data *data)
 	rows = ft_alloc_for_map(data->pars, data->lst);
 	if (!rows)
 		(write(2, "Error\n", 6), exit(1));
-	ft_open_img(data);
 	ft_check_map(rows, data->pars);
+	ft_open_img(data);
 	return rows;
 }

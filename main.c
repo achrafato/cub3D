@@ -100,11 +100,13 @@ int	main(int ac, char **av)
 
 
 	data = ft_init(data, av);
+	if(!data)
+		return 1;
 	// printf("%p\n", data);
 	rows = ft_parsing(ac, rows, data);
 	if (!rows)
 		return 1;
 	// printf("&&&&&&&&&&%p\n", rows);
-	// render_map(rows, data);
+	render_map(rows, data);
 	return (0);
 }
