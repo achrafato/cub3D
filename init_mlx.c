@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "cub3D.h"
 
 /*
 	turn_direc -1 if left, 1 if right
@@ -71,25 +71,28 @@ void	player_position(char **rows, int *x, int *y, t_player *pl)
 	}
 }
 
-mlx_texture_t	**load_pictures(void)
+mlx_texture_t	**load_pictures(t_data *data)
 {
 	mlx_texture_t	**pngs;
 	int				i;
-	char			*arr[4];
+	// char			*arr[4];
+	t_list			*ls;
 
 	pngs = NULL;
-	arr[0] = "./textures/image_1.png";
-	arr[1] = "./textures/image_2.png";
-	arr[2] = "./textures/image_5.png";
-	arr[3] = "./textures/image_3.png";
+	ls = data->lst;
+	// arr[0] = "./textures/image_1.png";
+	// arr[1] = "./textures/image_2.png";
+	// arr[2] = "./textures/image_5.png";
+	// arr[3] = "./textures/image_3.png";
 	i = 0;
 	pngs = malloc(sizeof(mlx_texture_t *) * 4);
 	if (!pngs)
 		return (NULL);
-	while (i < 4)
+	while (i < 4 && ls)
 	{
-		pngs[i] = mlx_load_png(arr[i]);
+		pngs[i] = mlx_load_png(ls->value);
 		i++;
+		ls = ls->next;
 	}
 	return (pngs);
 }
@@ -115,7 +118,7 @@ void	fill_data(t_data *data, char **arr)
 	data->pl->i += 32;
 	data->pl->j = j * CUB_SIZE;
 	data->pl->j += 32;
-	data->pngs = load_pictures();
+	data->pngs = load_pictures(data);
 	if (!data->pngs)
 		ft_error(data, 2, 1);
 }

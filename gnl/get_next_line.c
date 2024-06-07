@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../cub3D.h"
 
 void	mingle_data(char **container, char **buffer, char **keeper)
 {

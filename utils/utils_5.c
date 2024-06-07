@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "../cub3D.h"
 
 void	setting_pl_direction(float ray_angle, t_pl_dr *pl_dr)
 {
@@ -120,7 +120,7 @@ void	render_3d_view(t_data *data)
 	float			ray_angle;
 
 	i = 0;
-	paint_ciel_floor(data);	
+	paint_ciel_floor(data);
 	ray_angle = data->pl->rt_angle - (FOV / 2);
 	while (i < WIDTH)
 	{
@@ -130,12 +130,12 @@ void	render_3d_view(t_data *data)
 	}
 }
 
-int	ft_strlen(char *str)
-{
-	int	i;
+// int	ft_strlen(char *str)
+// {
+// 	int	i;
 
-	i = 0;
-	while (str && str[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (str && str[i])
+// 		i++;
+// 	return (i);
+// }

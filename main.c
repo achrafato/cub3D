@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "main.h"
+#include "cub3D.h"
 
 void	add_to_list(char *line, t_mp **head)
 {
@@ -61,13 +61,13 @@ void	close_window(void	*dt)
 	ft_error(data, 2, 1);
 }
 
-void	render_map(char **rows)
+void	render_map(char **rows, t_data *data)
 {
-	t_data	*data;
+	// t_data	*data;
 
-	data = malloc(sizeof(t_data));
-	if (!data)
-		ft_error(NULL, 2, 0);
+	// data = malloc(sizeof(t_data));
+	// if (!data)
+	// 	ft_error(NULL, 2, 0);
 	fill_data(data, rows);
 	data->img = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	if (!data->img || (mlx_image_to_window(data->mlx_ptr, data->img, 0, 0) < 0))
@@ -84,24 +84,40 @@ void test_leak()
 	system("leaks cub");
 }
 
-int	main(void)
+t_data	*ft_init(t_data *data, char **av)
 {
-	int		file;
-	char	*str;
-	t_mp	*lines;
-	char	**rows;
-	int		i;
+	data = malloc(sizeof(t_data));
+	if (!data)
+		ft_error(NULL, 2, 0);
+	data->pars = malloc(sizeof(t_pars));
+	if (!data->pars)
+		ft_error(NULL, 2, 0); // check this
+	data->pars->c = 0;
+	data->pars->ea = 0;
+	data->pars->so = 0;
+	data->pars->no = 0;
+	data->pars->we = 0;
+	data->pars->f = 0;
+	data->pars->name = av[1];
+	return (data);
+}
 
-	atexit(&test_leak);
-	i = 0;
-	file = open("./map2.cub", O_RDONLY);
-	lines = accumulate_lines(file);
-	rows = conver_to_2d_array(lines);
-	// while (rows && rows[i])
-	// {
-	// 	printf("%s", rows[i]);
-	// 	i++;
-	// }
-	render_map(rows);
+int	main(int ac, char **av)
+{
+	// t_mp	*lines;
+	char	**rows = NULL;
+	t_data	*data = NULL;
+	if (ac != 2)
+		return (1);
+
+	// atexit(&test_leak);
+	data = ft_init(data, av);
+	if (!data)
+		return (1);
+	rows = ft_parsing(rows, data);
+	if (!rows)
+		return (1);
+	render_map(rows, data);
+
 	return (0);
 }

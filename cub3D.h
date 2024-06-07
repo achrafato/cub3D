@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   cub3D.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,14 +13,24 @@
 #ifndef MAIN_H
 # define MAIN_H
 
-# include "get_next_line.h"
+// # include "get_next_line.h"
+#include <libc.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
 # include <string.h>
 # include <errno.h>
 # include <limits.h>
-# include "/Users/aibn-che/MLX42/include/MLX42/MLX42.h"
+# include "/Users/sdemnati/MLX42/include/MLX42/MLX42.h"
+
+
+# include <stdlib.h>
+# include <unistd.h>
+# include <limits.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 # define RED 0xFF0000FF
 # define WHITE 0xFFFFFFFF
@@ -54,6 +64,28 @@ typedef struct cub_map
 	char			*line;
 	struct cub_map	*next;
 }		t_mp;
+
+typedef struct s_list
+{
+	char			*type;
+	char			*value;
+	struct s_list	*next;
+}	t_list;
+
+typedef struct s_pars
+{
+
+	int len;
+	int no;
+	int so;
+	int ea;
+	int we;
+	int f;
+	int c;
+	int fd;
+	int Y;
+	char *name;
+}	t_pars;
 
 typedef struct horizontal_data
 {
@@ -133,7 +165,9 @@ typedef struct s_data
 	mlx_image_t		*img;
 	mlx_texture_t	**pngs;
 	t_player		*pl;
+	t_pars			*pars;
 	t_wall			wall;
+	t_list			*lst;
 }		t_data;
 
 typedef struct Colors
@@ -167,6 +201,7 @@ typedef struct player_direction
 	int	is_ray_facing_left;
 }		t_pl_dr;
 
+
 // Utils/utils_1.c
 void	free_to_d_arr(char **arr);
 void	ft_error(t_data *data, int a, int c);
@@ -193,7 +228,7 @@ float	closest_wall_intersection(t_data *data, float ray_angle, t_rays *rays);
 void	setting_pl_direction(float ray_angle, t_pl_dr *pl_dr);
 void	paint_ciel_floor(t_data *data);
 void	render_3d_view(t_data *data);
-int		ft_strlen(char *str);
+// int		ft_strlen(char *str);
 
 // Utils/utils_6.c
 mlx_texture_t	*ft_get_texture(t_data *data, t_rays *rays);
@@ -202,5 +237,69 @@ int32_t	ft_reverse_color(int32_t colors);
 
 // init_mlx.c
 void	fill_data(t_data *data, char **arr);
+
+//-----------------------get_next_line---------------------
+
+void	mingle_data(char **container, char **buffer, char **keeper);
+int	allocate_buffer(char **buffer, char **keeper);
+char	*get_next_line(int fd);
+int		encounter_space(char *str);
+char	*str_join(char **s1, char *s2);
+char	*substring(char *s, int index);
+void	handle_nl(char **container, char *buffer, char **keeper);
+
+//-----------------------libft---------------------
+
+
+
+int		ft_strncmp(const char *str1, const char *str2, size_t n);
+char	*ft_strchr(const char *s, int chr);
+char	*ft_substr(const char *str, unsigned int start, size_t len);
+char	*ft_strdup(const char *str);
+char	*ft_strtrim(char const *str, char const *set);
+char	**ft_split(const char *str, char sep);
+void	ft_lstadd_back(t_list **lst, t_list *new1);
+t_list	*ft_lstnew(char **arr);
+int		ft_isalpha(int c);
+int		ft_strcmp(char *s1, char *s2);
+int		ft_strlen(const char *s);
+int		ft_atoi(const char *str);
+int 	ft_isdigit(int c);
+int		ft_strcmp(char *s1, char *s2);
+void	ft_lstclear(t_list **lst);
+
+//-----------------------extention---------------------
+
+char	*ft_remove_nl(char *str);
+int		check_extention(char *str1, char *str2);
+
+//-----------------------parsing---------------------
+
+int 	ft_len_of_map(int fd, char *str);
+char	**ft_alloc_for_map(t_pars *pars);
+char	**ft_parsing(char **rows, t_data *data);
+
+
+//-----------------------open_img---------------------
+
+int 	ft_check_rgb(char *str);
+void 	ft_free(char **str);
+void 	ft_open_img(t_data *data);
+
+//-----------------------check_extention---------------------
+
+char	*ft_remove_nl(char *str) ;// check to remove it
+int		check_extention(char *str1, char *str2);
+
+//-----------------------direction---------------------
+
+void 	ft_check_duplicate(char *str, t_pars *pars);
+void 	ft_check_direction(t_data *data);
+
+//-----------------------check_map---------------------
+
+int		ft_check_char(char c);
+void 	ft_check_first_last(char **arr, t_pars *pars);
+void	ft_check_map(char **arr, t_data *data);
 
 #endif

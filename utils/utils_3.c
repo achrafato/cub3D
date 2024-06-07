@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "../cub3D.h"
 #include <math.h>
 
 void	init_turn_and_walk_directions(t_data *data, int key)
@@ -45,7 +45,7 @@ void	init_turn_and_walk_directions(t_data *data, int key)
 /*
 	- fmod(angle, TWO_PI)` ensures that the angle is kept within the range
 		of a full circle, which is \(0\) to \(2\pi\) radians
-	
+
 	- If the angle is negative, shift it to the positive range [0, 2π)
 */
 float	normalize_angle(float angle)

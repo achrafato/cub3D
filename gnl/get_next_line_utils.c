@@ -10,17 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-
-int	str_len(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i])
-		i++;
-	return (i);
-}
+#include "../cub3D.h"
 
 char	*str_join(char **s1, char *s2)
 {
@@ -32,8 +22,8 @@ char	*str_join(char **s1, char *s2)
 
 	j = 0;
 	i = 0;
-	len1 = str_len(*s1);
-	len2 = str_len(s2);
+	len1 = ft_strlen(*s1);
+	len2 = ft_strlen(s2);
 	str = malloc(sizeof(char) * (len1 + len2 + 1));
 	if (!str)
 		return (free(*s1), *s1 = NULL, NULL);
@@ -91,8 +81,8 @@ void	handle_nl(char **container, char *buffer, char **keeper)
 	{
 		if (buffer[i] == '\n')
 		{
-			*keeper = substring(buffer + (i + 1), str_len(buffer + (i + 1)));
-			if (str_len(*keeper) == 0)
+			*keeper = substring(buffer + (i + 1), ft_strlen(buffer + (i + 1)));
+			if (ft_strlen(*keeper) == 0)
 				(free(*keeper), *keeper = NULL);
 			sub = substring(buffer, i);
 			*container = str_join(container, sub);

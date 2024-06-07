@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "../cub3D.h"
 
 mlx_texture_t	*ft_get_texture(t_data *data, t_rays *rays)
 {

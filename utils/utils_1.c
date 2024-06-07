@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "../cub3D.h"
 
 void	free_to_d_arr(char **arr)
 {
@@ -27,7 +27,7 @@ void	free_to_d_arr(char **arr)
 // Exit the program as failure.
 void	ft_error(t_data *data, int a, int c)
 {
-	char	*err;
+	// char	*err;
 	int		i;
 
 	i = 0;
@@ -76,11 +76,11 @@ int	max_width(char **rows)
 	int	i;
 
 	i = 1;
-	max = str_len(rows[0]);
+	max = ft_strlen(rows[0]);
 	while (rows && rows[i])
 	{
-		if (str_len(rows[i]) > max)
-			max = str_len(rows[i]);
+		if (ft_strlen(rows[i]) > max)
+			max = ft_strlen(rows[i]);
 		i++;
 	}
 	return (max);

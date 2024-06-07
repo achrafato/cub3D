@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../main.h"
+#include "../cub3D.h"
 
 /*
 	calculate the distance between each horizontal point
 		* ystep : represent the next Vertical step
 		* xstep : represent the next Horizontal step
-	
+
 	was_hit_horizontal : this var indicate whether or not player
 						is collided with wall
 */
@@ -84,7 +84,7 @@ void	calc_dis_bt_ech_vr_point(t_pl_dr pl_dr, float ray_angle, t_vr_data *vr)
 
 /*
 	px & py : are the cordination of the player
-	
+
 	ax_v : represent the x-coordinate of the first vertical point
 	ay_v : represent the y-coordinate of the first vertical point
 */
