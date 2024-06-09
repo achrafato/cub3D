@@ -37,7 +37,7 @@ float	get_xcord(t_rays *rays, mlx_texture_t *img)
 
 int32_t ft_reverse_color(int32_t colors)
 {
-	t_rgba    color;
+	t_rgba	color;
 
 	color.a = (colors >> 24) & 0xFF;
 	color.r = (colors >> 16) & 0xFF;

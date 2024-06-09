@@ -29,7 +29,7 @@
 # include <limits.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 1
 # endif
 
 # define RED 0xFF0000FF
@@ -275,7 +275,7 @@ int		check_extention(char *str1, char *str2);
 
 //-----------------------parsing---------------------
 
-int 	ft_len_of_map(int fd, char *str);
+// int 	ft_len_of_map(int fd, char *str);
 char	**ft_alloc_for_map(t_pars *pars);
 char	**ft_parsing(char **rows, t_data *data);
 

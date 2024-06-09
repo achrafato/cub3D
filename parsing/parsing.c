@@ -1,26 +1,31 @@
 #include "../cub3D.h"
 
-int	ft_len_of_map(int fd, char *str)
-{
-	int		n;
-	char	*line;
-	char	*tmp;
+// int	ft_len_of_map(int fd, char *str)
+// {
+// 	int		n;
+// 	char	*line;
+// 	char	*tmp;
 
-	n = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		tmp = ft_remove_nl(line);
-		if(tmp && *tmp && !ft_isalpha(*tmp))
-			n++;
-		line = get_next_line(fd);
-	}
-	close(fd);
-	if (open(str, O_RDONLY) == -1)
-		(write(2, "Error during opening file\n", 26), exit(1)); // free
-	return (n);
-}
-char	**ft_empty_line(t_pars *pars, char **arr)
+// 	n = 0;
+// 	line = get_next_line(fd);
+// 	while (line)
+// 	{
+// 		tmp = ft_remove_nl(line);
+// 		free(line);
+// 		// printf("%s\n", tmp);
+// 		if(tmp && *tmp && !ft_isalpha(*tmp))
+// 		{
+// 			n++;
+// 		}
+// 		line = get_next_line(fd);
+// 	}
+// 	close(fd);
+// 	if (open(str, O_RDONLY) == -1)
+// 		(write(2, "Error during opening file\n", 26), exit(1)); // free
+// 	// printf("here %d\n", n);
+// 	return (n);
+// }
+char	**ft_copy_line(t_pars *pars, char **arr)
 {
 	int		n;
 	char	*line;
@@ -32,7 +37,7 @@ char	**ft_empty_line(t_pars *pars, char **arr)
 	{
 		tmp = ft_remove_nl(line);
 		free(line);
-		if ( tmp && !*tmp && n > 0)
+		if (tmp && !*tmp && n > 0)
 			(write(2, "Error empty line1\n", 18), exit(1));
 		if (tmp && *tmp && !ft_isalpha(*tmp))
 		{
@@ -48,15 +53,12 @@ char	**ft_empty_line(t_pars *pars, char **arr)
 
 char **ft_alloc_for_map(t_pars *pars)
 {
-	// char	*line;
-	// char	*tmp;
 	char	**rows;
 
-	pars->len  = ft_len_of_map(pars->fd, pars->name);
 	rows = malloc(sizeof(char *) * (pars->len + 1));
 	if (!rows)
 		return (NULL);
-	rows = ft_empty_line(pars, rows);
+	rows = ft_copy_line(pars, rows);
 	return (rows);
 }
 

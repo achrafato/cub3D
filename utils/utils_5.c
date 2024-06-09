@@ -130,12 +130,17 @@ void	render_3d_view(t_data *data)
 	}
 }
 
-// int	ft_strlen(char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (str && str[i])
-// 		i++;
-// 	return (i);
-// }
+// if (stock->rays[i]->was_hit_vertical)
+//     {
+//         *texture_offset_x = (int)stock->rays[i]->vertical_wall_hit_y
+//             % MINI_MAP_BOX_ZIZE;
+//         tmp = *texture_offset_x;
+//         *texture_offset_x = (tmp * stock->texture[*texture_index]->width) / MINI_MAP_BOX_ZIZE;
+//     }
+//     else if (stock->rays[i]->was_hit_horizontal)
+//     {
+//         *texture_offset_x = (int)stock->rays[i]->horizontal_wall_hit_x
+//             % MINI_MAP_BOX_ZIZE;
+//         tmp = *texture_offset_x;
+//         *texture_offset_x = (tmp * stock->texture[*texture_index]->width) / MINI_MAP_BOX_ZIZE;
+//     }

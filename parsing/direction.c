@@ -24,7 +24,7 @@ void	ft_stor_direction(char *line, t_data *data)
 	arr = ft_split(line, ' ');
 	if (!arr)
 		return ;
-	if (arr && arr[2]) //try to add character in the begining
+	if (arr && arr[0] && arr[1] && arr[2]) //try to add character in the begining
 		(write(2, "Error Invalid len\n", 17), exit(1));
 	tmp = ft_lstnew(arr);
 	if (!tmp)
@@ -39,6 +39,7 @@ void ft_check_direction(t_data *data)
 	char *line;
 	char *tmp;
 	data->lst = NULL;
+	data->pars->len = 0;
 
 	line = get_next_line(data->pars->fd);
 	while(line)
@@ -47,6 +48,8 @@ void ft_check_direction(t_data *data)
 		free(line);
 		if(tmp && *tmp && ft_isalpha(*tmp))
 			ft_stor_direction(tmp, data);
+		if(tmp && *tmp && !ft_isalpha(*tmp))
+			data->pars->len++;
 		line = get_next_line(data->pars->fd);
 	}
 	if (data->pars->c != 1 || data->pars->f != 1 || data->pars->so != 1
@@ -54,6 +57,6 @@ void ft_check_direction(t_data *data)
 			(write(2, "not 21\n", 7), exit(1));
 	close(data->pars->fd);
 	data->pars->fd = open(data->pars->name, O_RDONLY);
-	if(data->pars->fd == -1)
+	if (data->pars->fd == -1)
 		(write(2, "Error during opening file\n", 26), exit(1));
 }
