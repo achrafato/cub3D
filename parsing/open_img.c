@@ -71,7 +71,10 @@ void	ft_open_img(t_data *data)
 		}
 		else
 			if (open(tmp->value, O_RDONLY) == -1)
+			{
+				printf("%s\n", tmp->type);
 					(write(2, "Error during opening img\n", 25), exit(1));
+			}
 		tmp = tmp->next;
 	}
 }

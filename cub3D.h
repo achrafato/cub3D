@@ -13,7 +13,6 @@
 #ifndef MAIN_H
 # define MAIN_H
 
-// # include "get_next_line.h"
 #include <libc.h>
 # include <fcntl.h>
 # include <stdio.h>
@@ -22,8 +21,6 @@
 # include <errno.h>
 # include <limits.h>
 # include "/Users/sdemnati/MLX42/include/MLX42/MLX42.h"
-
-
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
@@ -31,19 +28,21 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif
-
 # define RED 0xFF0000FF
 # define WHITE 0xFFFFFFFF
 # define BLACK 0x000000FF
 # define GREEN 0x00FF00FF
 # define BLUE 0x0000FFFF
-
 # define LEFT 263
 # define RIGHT 262
 # define UP 87
 # define DOWN 83
 # define R 68
 # define L 65
+# define EAST 0
+# define WEST 1
+# define NORTH 2
+# define SOUTH 3
 
 # define D_KEY 68
 # define A_KEY 65
@@ -259,7 +258,7 @@ char	*ft_strdup(const char *str);
 char	*ft_strtrim(char const *str, char const *set);
 char	**ft_split(const char *str, char sep);
 void	ft_lstadd_back(t_list **lst, t_list *new1);
-t_list	*ft_lstnew(char **arr);
+t_list	*ft_lstnew(char *dir, char *path);
 int		ft_isalpha(int c);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strlen(const char *s);

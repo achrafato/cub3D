@@ -50,6 +50,8 @@ void	amend_cordinations(int *x, int *y, char **arr)
 		*y = map_height(arr) - 1;
 	if ((len_of_current_row(arr[*y]) <= *x) && *x != 0)
 		*x = len_of_current_row(arr[*y]) - 1;
+	if (*x < 0)
+		*x = 0;
 }
 
 float	distance_between_points(float x1, float y1, float x2, float y2)

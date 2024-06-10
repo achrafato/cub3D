@@ -6,6 +6,8 @@ int	ft_isalpha(int c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
+	// if (c == 32)
+	// 	return 0;
 	return (0);
 }
 
@@ -77,15 +79,15 @@ t_list	*ft_lstlast(t_list *lst)
 }
 
 
-t_list	*ft_lstnew(char **res)
+t_list	*ft_lstnew(char *dir, char *path)
 {
 	t_list	*node;
 
 	node = malloc(sizeof(t_list));
 	if (!node)
 		return (NULL);
-	node->type = res[0];
-	node->value = res[1];
+	node->type = dir;
+	node->value = path;
 	node->next = NULL;
 	return (node);
 }

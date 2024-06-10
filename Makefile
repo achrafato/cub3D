@@ -26,7 +26,7 @@ CC = cc #-Wall -Werror -Wextra
 rm = rm -f
 
 NAME = cub3D
-HEADERS = ./cub3D.h ./get_next_line.h
+HEADERS = cub3D.h
 
 all : $(NAME)
 

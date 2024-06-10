@@ -71,30 +71,48 @@ void	player_position(char **rows, int *x, int *y, t_player *pl)
 	}
 }
 
-mlx_texture_t	**load_pictures(t_data *data)
+mlx_texture_t    **check_pngs(mlx_texture_t **pngs)
 {
-	mlx_texture_t	**pngs;
-	int				i;
-	// char			*arr[4];
-	t_list			*ls;
+    if (!pngs[EAST] || !pngs[WEST] || !pngs[NORTH] || !pngs[SOUTH])
+    {
+        if (pngs[EAST])
+            mlx_delete_texture(pngs[EAST]);
+        if (pngs[WEST])
+            mlx_delete_texture(pngs[WEST]);
+        if (pngs[NORTH])
+            mlx_delete_texture(pngs[NORTH]);
+        if (pngs[SOUTH])
+            mlx_delete_texture(pngs[SOUTH]);
+        return (NULL);
+    }
+    return (pngs);
+}
 
-	pngs = NULL;
-	ls = data->lst;
-	// arr[0] = "./textures/image_1.png";
-	// arr[1] = "./textures/image_2.png";
-	// arr[2] = "./textures/image_5.png";
-	// arr[3] = "./textures/image_3.png";
-	i = 0;
-	pngs = malloc(sizeof(mlx_texture_t *) * 4);
-	if (!pngs)
-		return (NULL);
-	while (i < 4 && ls)
-	{
-		pngs[i] = mlx_load_png(ls->value);
-		i++;
-		ls = ls->next;
-	}
-	return (pngs);
+mlx_texture_t    **load_pictures(t_data *data)
+{
+    mlx_texture_t    **pngs;
+    int                i;
+    t_list            *ls;
+
+    i = 0;
+    pngs = NULL;
+    ls = data->lst;
+    pngs = malloc(sizeof(mlx_texture_t *) * 4);
+    if (!pngs)
+        return (NULL);
+    while (ls)
+    {
+        if (!ft_strcmp("EA", ls->type))
+            pngs[EAST] = mlx_load_png(ls->value);
+        else if (!ft_strcmp("WE", ls->type))
+            pngs[WEST] = mlx_load_png(ls->value);
+        else if (!ft_strcmp("NO", ls->type))
+            pngs[NORTH] = mlx_load_png(ls->value);
+        else if (!ft_strcmp("SO", ls->type))
+            pngs[SOUTH] = mlx_load_png(ls->value);
+        ls = ls->next;
+    }
+    return (check_pngs(pngs));
 }
 
 void	fill_data(t_data *data, char **arr)
