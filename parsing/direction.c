@@ -59,6 +59,7 @@ void	ft_stor_direction(char *line, t_data *data)
 	tmp = ft_lstnew(dir, path);
 	if(!tmp)
 		return;
+	printf("%s\n", tmp->type);
 	ft_lstadd_back(&data->lst, tmp);
 }
 
@@ -75,7 +76,7 @@ void ft_check_direction(t_data *data)
 	{
 		tmp = ft_remove_nl(line);
 		free(line);
-		if(tmp && *tmp && (ft_isalpha(*tmp)))
+		if(tmp && *tmp && (*tmp == 32 || ft_isalpha(*tmp)))
 			ft_stor_direction(tmp, data);
 		if(tmp && *tmp && !ft_isalpha(*tmp))
 			data->pars->len++;

@@ -39,12 +39,12 @@ void	update_player_rotation(t_player *pl, char player)
 {
 	if (player == 'E')
 		pl->rt_angle = 0 * (M_PI / 180);
-	else if (player == 'N')
-		pl->rt_angle = 90 * (M_PI / 180);
-	else if (player == 'S')
-		pl->rt_angle = 180 * (M_PI / 180);
 	else if (player == 'W')
+		pl->rt_angle = 180 * (M_PI / 180);
+	else if (player == 'N')
 		pl->rt_angle = 270 * (M_PI / 180);
+	else if (player == 'S')
+		pl->rt_angle = 90 * (M_PI / 180);
 }
 
 void	player_position(char **rows, int *x, int *y, t_player *pl)
