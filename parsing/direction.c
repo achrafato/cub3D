@@ -75,7 +75,7 @@ void ft_check_direction(t_data *data)
 	{
 		tmp = ft_remove_nl(line);
 		free(line);
-		if(tmp && *tmp && (*tmp == 32 || ft_isalpha(*tmp)))
+		if(tmp && *tmp && (ft_isalpha(*tmp)))
 			ft_stor_direction(tmp, data);
 		if(tmp && *tmp && !ft_isalpha(*tmp))
 			data->pars->len++;
@@ -88,5 +88,4 @@ void ft_check_direction(t_data *data)
 	data->pars->fd = open(data->pars->name, O_RDONLY);
 	if (data->pars->fd == -1)
 		(write(2, "Error during opening file\n", 26), exit(1));
-	printf("%d\n", data->pars->len);
 }

@@ -107,7 +107,6 @@ void	measuring_vr_intersection(t_data *data, float ray_angle, \
 		vr->y = floor(vr->y_to_check / CUB_SIZE);
 		vr->x = floor(vr->x_to_check / CUB_SIZE);
 		amend_cordinations(&(vr->x), &(vr->y), data->arr);
-		printf("y = %d   ---- x = %d  \n", vr->y, vr->x);
 		if (data->arr[vr->y][vr->x] == '1' || data->arr[vr->y][vr->x] == ' ')
 		{
 			vr->found_vert_wall_hit = 1;

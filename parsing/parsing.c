@@ -58,7 +58,6 @@ char **ft_alloc_for_map(t_pars *pars)
 	rows = malloc(sizeof(char *) * (pars->len + 1));
 	if (!rows)
 		return (NULL);
-	printf("%d\n", pars->len);
 	rows = ft_copy_line(pars, rows);
 	return (rows);
 }
