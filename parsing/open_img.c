@@ -67,7 +67,11 @@ void	ft_open_img(t_data *data)
 			while (arr[++i])
 				if (ft_check_rgb(arr[i]) || i >= 3)
 					(write(2, "Error invalid rgb\n", 18), exit(1));
-			ft_free(arr);
+			if (!ft_strcmp(tmp->type, "C"))
+				data->fc_color.c = arr;
+			else if (!ft_strcmp(tmp->type, "F"))
+				data->fc_color.f = arr;
+			// ft_free(arr);
 		}
 		else
 			if (open(tmp->value, O_RDONLY) == -1)

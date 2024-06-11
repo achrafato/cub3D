@@ -6,35 +6,29 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:28:24 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/11 12:03:30 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:09:23 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-void	setting_pl_direction(float ray_angle, t_pl_dr *pl_dr)
-{
-	int	right;
-
-	right = ray_angle < M_PI / 2 || ray_angle > 270 * (M_PI / 180);
-	pl_dr->is_ray_facing_down = ray_angle > 0 && ray_angle < M_PI;
-	pl_dr->is_ray_facing_up = !(pl_dr->is_ray_facing_down);
-	pl_dr->is_ray_facing_right = right;
-	pl_dr->is_ray_facing_left = !(pl_dr->is_ray_facing_right);
-}
-
 void	paint_ciel_floor(t_data *data)
 {
 	int	i;
 	int	j;
+	char **f;
+	char **c;
 
+	c = data->fc_color.c;
+	f = data->fc_color.f;
 	i = 0;
 	while (i < (HEIGHT / 2))
 	{
 		j = 0;
 		while (j < WIDTH)
 		{
-			mlx_put_pixel(data->img, j, i, rgba(121, 205, 236, 220));
+			// mlx_put_pixel(data->img, j, i, rgba(1, 205, 236, 255));
+			mlx_put_pixel(data->img, j, i, rgba(ft_atoi(c[0]), ft_atoi(c[1]), ft_atoi(c[2]), 255));
 			j++;
 		}
 		i++;
@@ -44,53 +38,62 @@ void	paint_ciel_floor(t_data *data)
 		j = 0;
 		while (j < WIDTH)
 		{
-			mlx_put_pixel(data->img, j, i, rgba(48, 47, 46, 255));
+			// mlx_put_pixel(data->img, j, i, rgba(48, 47, 46, 255));
+			mlx_put_pixel(data->img, j, i, rgba(ft_atoi(f[0]), ft_atoi(f[1]), ft_atoi(f[2]), 255));
 			j++;
 		}
 		i++;
 	}
 }
 
+void	concluding_top_bottom_walldistance(t_wall *wall, t_data *data, \
+		t_rays *rays, float ray_angle)
+{
+	wall->ds = closest_wall_intersection(data, ray_angle, rays);
+	wall->perp_distance = wall->ds * cos(ray_angle - data->pl->rt_angle);
+	wall->distance_proj_plane = ((float)WIDTH / 2.0) / tan(data->fov / 2);
+	wall->projected_wall_height = (CUB_SIZE / wall->perp_distance)
+		* wall->distance_proj_plane;
+	wall->wall_strip_height = (int)wall->projected_wall_height;
+	wall->wall_top_pixel = (HEIGHT / 2) - (wall->wall_strip_height / 2);
+	if (wall->wall_top_pixel < 0)
+		wall->wall_top_pixel = 0;
+	wall->wall_bottom_pixel = (HEIGHT / 2) + (wall->wall_strip_height / 2);
+	if (wall->wall_bottom_pixel > HEIGHT)
+		wall->wall_bottom_pixel = HEIGHT;
+}
+
+void	texture_info(t_data *data, t_rays *rays, t_wall *wall, t_txt_inf *txt)
+{
+	float	offset;
+
+	txt->img = ft_get_texture(data, rays);
+	offset = (float)((float)txt->img->height / (float)wall->wall_strip_height);
+	txt->img_px = (int32_t *)txt->img->pixels;
+	txt->offset = offset;
+	txt->xcord = get_xcord(rays, txt->img);
+	txt->ycord = ((float)wall->wall_top_pixel - (HEIGHT / 2.0)
+			+ ((float)wall->wall_strip_height / 2)) * txt->offset;
+	if (txt->ycord < 0)
+		txt->ycord = 0;
+}
+
 void	build_walls(t_data *data, float ray_angle, t_rays *rays, int i)
 {
-	t_wall	wall;
+	t_wall			wall;
+	t_txt_inf		txt;
+	int32_t			color;
 
-	mlx_texture_t	*img;
-	int32_t			*img_px;
-	float			offset;
-	float			xcord;
-	float			ycord;
-
-	wall.ds = closest_wall_intersection(data, ray_angle, rays);
-	wall.perp_distance = wall.ds * cos(ray_angle - data->pl->rt_angle);
-	wall.distance_proj_plane = ((float)WIDTH / 2.0) / tan(data->fov / 2);
-	wall.projected_wall_height = (CUB_SIZE / wall.perp_distance)
-		* wall.distance_proj_plane;
-	wall.wall_strip_height = (int)wall.projected_wall_height;
-	wall.wall_top_pixel = (HEIGHT / 2) - (wall.wall_strip_height / 2);
-
-	//////////////////////////////////////////////////
-	img = ft_get_texture(data, rays);
-	img_px = (int32_t *)img->pixels;
-	offset = (float)((float)img->height / (float)wall.wall_strip_height);
-	xcord = get_xcord(rays, img);
-	if (wall.wall_top_pixel < 0)
-		wall.wall_top_pixel = 0;
-	ycord = ((float)wall.wall_top_pixel - (HEIGHT / 2.0) + ((float)wall.wall_strip_height / 2)) * offset;
-	if (ycord < 0)
-		ycord = 0;
-
-	//////////////////////////////////////////////////
-
-
-	wall.wall_bottom_pixel = (HEIGHT / 2) + (wall.wall_strip_height / 2);
-	if (wall.wall_bottom_pixel > HEIGHT)
-		wall.wall_bottom_pixel = HEIGHT;
+	data->txt = &txt;
+	concluding_top_bottom_walldistance(&wall, data, rays, ray_angle);
+	texture_info(data, rays, &wall, &txt);
 	while (wall.wall_top_pixel < wall.wall_bottom_pixel)
 	{
-		mlx_put_pixel(data->img, i, wall.wall_top_pixel, \
-		ft_reverse_color(img_px[((int)ycord * img->width) + (int)xcord]));
-		ycord += offset;
+		color = txt.img_px[((int)txt.ycord * txt.img->width)
+			+ (int)txt.xcord];
+		color = ft_reverse_color(color);
+		mlx_put_pixel(data->img, i, wall.wall_top_pixel, color);
+		txt.ycord += txt.offset;
 		(wall.wall_top_pixel)++;
 	}
 	data->wall = wall;

@@ -6,14 +6,14 @@
 #    By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 18:09:04 by aibn-che          #+#    #+#              #
-#    Updated: 2024/06/05 00:20:07 by aibn-che         ###   ########.fr        #
+#    Updated: 2024/06/11 15:25:23 by aibn-che         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 MSRCS = 	main.c		gnl/get_next_line.c		gnl/get_next_line_utils.c		init_mlx.c		utils/utils_1.c \
 			utils/utils_2.c		utils/utils_3.c		utils/utils_4.c		utils/utils_5.c		utils/utils_6.c\
-			parsing/parsing.c	parsing/libft.c		parsing/check_map.c \
+			utils/utils_7.c		parsing/parsing.c	parsing/libft.c		parsing/check_map.c \
 			parsing/direction.c 	parsing/extention.c		parsing/open_img.c \
 
 MOBJS = $(MSRCS:.c=.o)

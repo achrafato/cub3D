@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                             :+:      :+:    :+:   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:15:02 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/05 10:54:39 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:06:09 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
-#include <libc.h>
+# include <libc.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -56,12 +56,6 @@
 # define HEIGHT 1080
 # define NUM_RAYS WIDTH
 
-typedef struct cub_map
-{
-	char			*line;
-	struct cub_map	*next;
-}		t_mp;
-
 typedef struct s_list
 {
 	char			*type;
@@ -71,17 +65,16 @@ typedef struct s_list
 
 typedef struct s_pars
 {
-
-	int len;
-	int no;
-	int so;
-	int ea;
-	int we;
-	int f;
-	int c;
-	int fd;
-	int Y;
-	char *name;
+	int		len;
+	int		no;
+	int		so;
+	int		ea;
+	int		we;
+	int		f;
+	int		c;
+	int		fd;
+	int		Y;
+	char	*name;
 }	t_pars;
 
 typedef struct horizontal_data
@@ -100,7 +93,7 @@ typedef struct horizontal_data
 	float	wallhit_y_h;
 	float	horz_hit_distance;
 	int		found_horz_wall_hit;
-}		t_hr_data;
+}	t_hr_data;
 
 typedef struct vertical_data
 {
@@ -118,7 +111,7 @@ typedef struct vertical_data
 	float	wallhit_y_v;
 	float	vert_hit_distance;
 	int		found_vert_wall_hit;
-}		t_vr_data;
+}	t_vr_data;
 
 typedef struct player
 {
@@ -153,6 +146,21 @@ typedef struct wall_info
 	int		ds;
 }		t_wall;
 
+typedef struct texture_infos
+{
+	mlx_texture_t	*img;
+	float			xcord;
+	float			ycord;
+	float			offset;
+	int32_t			*img_px;
+}		t_txt_inf;
+
+typedef struct floor_ciel_color
+{
+	char **f;
+	char **c;
+}	t_fcc;
+
 typedef struct s_data
 {
 	float				fov;
@@ -168,6 +176,8 @@ typedef struct s_data
 	t_pars			*pars;
 	t_wall			wall;
 	t_list			*lst;
+	t_txt_inf		*txt;
+	t_fcc			fc_color;
 }		t_data;
 
 typedef struct Colors
@@ -209,6 +219,7 @@ int		max_width(char **rows);
 
 // Utils/utils_2.c
 void	set_intersection_distance(t_vr_data *vr, t_hr_data *hr, t_rays *rays);
+void	setting_pl_direction(float ray_angle, t_pl_dr *pl_dr);
 int		rgba(unsigned int r, unsigned int g, unsigned b, unsigned a);
 void	amend_cordinations(int *x, int *y, char **arr);
 float	distance_between_points(float x1, float y1, float x2, float y2);
@@ -223,15 +234,16 @@ void	render_loop(void *dt);
 float	closest_wall_intersection(t_data *data, float ray_angle, t_rays *rays);
 
 // Utils/utils_5.c
-void	setting_pl_direction(float ray_angle, t_pl_dr *pl_dr);
 void	paint_ciel_floor(t_data *data);
 void	render_3d_view(t_data *data);
-// int		ft_strlen(char *str);
 
 // Utils/utils_6.c
 mlx_texture_t	*ft_get_texture(t_data *data, t_rays *rays);
 float	get_xcord(t_rays *rays, mlx_texture_t *img);
 int32_t	ft_reverse_color(int32_t colors);
+
+// Utils/utils_7.c
+void	player_position(char **rows, int *x, int *y, t_player *pl);
 
 // init_mlx.c
 void	fill_data(t_data *data, char **arr);

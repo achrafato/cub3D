@@ -6,11 +6,22 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:40:48 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/11 11:44:01 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:07:15 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
+
+void	setting_pl_direction(float ray_angle, t_pl_dr *pl_dr)
+{
+	int	right;
+
+	right = ray_angle < M_PI / 2 || ray_angle > 270 * (M_PI / 180);
+	pl_dr->is_ray_facing_down = ray_angle > 0 && ray_angle < M_PI;
+	pl_dr->is_ray_facing_up = !(pl_dr->is_ray_facing_down);
+	pl_dr->is_ray_facing_right = right;
+	pl_dr->is_ray_facing_left = !(pl_dr->is_ray_facing_right);
+}
 
 void	set_intersection_distance(t_vr_data *vr, t_hr_data *hr, t_rays *rays)
 {
@@ -37,26 +48,14 @@ int	rgba(unsigned int r, unsigned int g, unsigned b, unsigned a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-int	len_of_current_row(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i])
-	{
-		i++;
-	}
-	return (i);
-}
-
 void	amend_cordinations(int *x, int *y, char **arr)
 {
 	if (*y < 0)
 		*y = 0;
 	if (*y >= map_height(arr))
 		*y = map_height(arr) - 1;
-	if ((len_of_current_row(arr[*y]) <= *x) && *x != 0)
-		*x = len_of_current_row(arr[*y]) - 1;
+	if ((ft_strlen(arr[*y]) <= *x) && *x != 0)
+		*x = ft_strlen(arr[*y]) - 1;
 	if (*x < 0)
 		*x = 0;
 }

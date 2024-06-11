@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:28:26 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/11 11:18:56 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:10:58 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,84 +35,48 @@ t_player	*init_player(void)
 	return (pl);
 }
 
-void	update_player_rotation(t_player *pl, char player)
+mlx_texture_t	**check_pngs(mlx_texture_t **pngs)
 {
-	if (player == 'E')
-		pl->rt_angle = 0 * (M_PI / 180);
-	else if (player == 'W')
-		pl->rt_angle = 180 * (M_PI / 180);
-	else if (player == 'N')
-		pl->rt_angle = 270 * (M_PI / 180);
-	else if (player == 'S')
-		pl->rt_angle = 90 * (M_PI / 180);
+	if (!pngs[EAST] || !pngs[WEST] || !pngs[NORTH] || !pngs[SOUTH])
+	{
+		if (pngs[EAST])
+			mlx_delete_texture(pngs[EAST]);
+		if (pngs[WEST])
+			mlx_delete_texture(pngs[WEST]);
+		if (pngs[NORTH])
+			mlx_delete_texture(pngs[NORTH]);
+		if (pngs[SOUTH])
+			mlx_delete_texture(pngs[SOUTH]);
+		return (NULL);
+	}
+	return (pngs);
 }
 
-void	player_position(char **rows, int *x, int *y, t_player *pl)
+mlx_texture_t	**load_pictures(t_data *data)
 {
-	int	i;
-	int	j;
+	mlx_texture_t	**pngs;
+	int				i;
+	t_list			*ls;
 
 	i = 0;
-	while (rows[i])
+	pngs = NULL;
+	ls = data->lst;
+	pngs = malloc(sizeof(mlx_texture_t *) * 4);
+	if (!pngs)
+		return (NULL);
+	while (ls)
 	{
-		j = 0;
-		while (rows[i][j])
-		{
-			if (rows[i][j] == 'N' || rows[i][j] == 'W' || rows[i][j] == 'E' || rows[i][j] == 'S')
-			{
-				*y = i;
-				*x = j;
-				update_player_rotation(pl, rows[i][j]);
-				break ;
-			}
-			j++;
-		}
-		i++;
+		if (!ft_strcmp("EA", ls->type))
+			pngs[EAST] = mlx_load_png(ls->value);
+		else if (!ft_strcmp("WE", ls->type))
+			pngs[WEST] = mlx_load_png(ls->value);
+		else if (!ft_strcmp("NO", ls->type))
+			pngs[NORTH] = mlx_load_png(ls->value);
+		else if (!ft_strcmp("SO", ls->type))
+			pngs[SOUTH] = mlx_load_png(ls->value);
+		ls = ls->next;
 	}
-}
-
-mlx_texture_t    **check_pngs(mlx_texture_t **pngs)
-{
-    if (!pngs[EAST] || !pngs[WEST] || !pngs[NORTH] || !pngs[SOUTH])
-    {
-        if (pngs[EAST])
-            mlx_delete_texture(pngs[EAST]);
-        if (pngs[WEST])
-            mlx_delete_texture(pngs[WEST]);
-        if (pngs[NORTH])
-            mlx_delete_texture(pngs[NORTH]);
-        if (pngs[SOUTH])
-            mlx_delete_texture(pngs[SOUTH]);
-        return (NULL);
-    }
-    return (pngs);
-}
-
-mlx_texture_t    **load_pictures(t_data *data)
-{
-    mlx_texture_t    **pngs;
-    int                i;
-    t_list            *ls;
-
-    i = 0;
-    pngs = NULL;
-    ls = data->lst;
-    pngs = malloc(sizeof(mlx_texture_t *) * 4);
-    if (!pngs)
-        return (NULL);
-    while (ls)
-    {
-        if (!ft_strcmp("EA", ls->type))
-            pngs[EAST] = mlx_load_png(ls->value);
-        else if (!ft_strcmp("WE", ls->type))
-            pngs[WEST] = mlx_load_png(ls->value);
-        else if (!ft_strcmp("NO", ls->type))
-            pngs[NORTH] = mlx_load_png(ls->value);
-        else if (!ft_strcmp("SO", ls->type))
-            pngs[SOUTH] = mlx_load_png(ls->value);
-        ls = ls->next;
-    }
-    return (check_pngs(pngs));
+	return (check_pngs(pngs));
 }
 
 void	fill_data(t_data *data, char **arr)
