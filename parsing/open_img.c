@@ -53,7 +53,7 @@ void	ft_open_img(t_data *data)
 	t_list	*tmp;
 	int		i;
 	char	**arr;
-
+	//rgba
 	tmp = data->lst;
 	while (tmp)
 	{
@@ -68,9 +68,17 @@ void	ft_open_img(t_data *data)
 				if (ft_check_rgb(arr[i]) || i >= 3)
 					(write(2, "Error invalid rgb\n", 18), exit(1));
 			if (!ft_strcmp(tmp->type, "C"))
-				data->fc_color.c = arr;
+			{
+				data->ceil.r = ft_atoi(arr[0]);
+				data->ceil.g = ft_atoi(arr[1]);
+				data->ceil.b = ft_atoi(arr[2]);
+			}
 			else if (!ft_strcmp(tmp->type, "F"))
-				data->fc_color.f = arr;
+			{
+				data->floor.r = ft_atoi(arr[0]);
+				data->floor.g = ft_atoi(arr[1]);
+				data->floor.b = ft_atoi(arr[2]);
+			}
 			// ft_free(arr);
 		}
 		else

@@ -59,7 +59,6 @@ void	ft_stor_direction(char *line, t_data *data)
 	tmp = ft_lstnew(dir, path);
 	if(!tmp)
 		return;
-	printf("%s\n", tmp->type);
 	ft_lstadd_back(&data->lst, tmp);
 }
 

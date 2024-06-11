@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:28:24 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/11 16:09:23 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:30:37 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,23 @@
 
 void	paint_ciel_floor(t_data *data)
 {
-	int	i;
-	int	j;
-	char **f;
-	char **c;
+	int		i;
+	int		j;
+	t_fcc	f;
+	t_fcc	c;
 
-	c = data->fc_color.c;
-	f = data->fc_color.f;
-	i = 0;
-	while (i < (HEIGHT / 2))
+	(1) && (f = data->floor, c = data->ceil, i = -1);
+	while (++i < (HEIGHT / 2))
 	{
 		j = 0;
 		while (j < WIDTH)
-		{
-			// mlx_put_pixel(data->img, j, i, rgba(1, 205, 236, 255));
-			mlx_put_pixel(data->img, j, i, rgba(ft_atoi(c[0]), ft_atoi(c[1]), ft_atoi(c[2]), 255));
-			j++;
-		}
-		i++;
+			mlx_put_pixel(data->img, j++, i, rgba(c.r, c.g, c.b, 255));
 	}
-	while (i < HEIGHT)
+	while (++i < HEIGHT)
 	{
 		j = 0;
 		while (j < WIDTH)
-		{
-			// mlx_put_pixel(data->img, j, i, rgba(48, 47, 46, 255));
-			mlx_put_pixel(data->img, j, i, rgba(ft_atoi(f[0]), ft_atoi(f[1]), ft_atoi(f[2]), 255));
-			j++;
-		}
-		i++;
+			mlx_put_pixel(data->img, j++, i, rgba(f.r, f.g, f.b, 255));
 	}
 }
 

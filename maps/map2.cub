@@ -3,8 +3,8 @@ NO      ./textures/lol.png
 SO      ./textures/Wheat_Field.png
 WE      ./textures/the_tower_of_babel.png
 EA      ./textures/Mona_Lisa.png
-C 225,30,0
-F 220,100,10
+C 1,205,236
+F 48,47,46
 
 
         1111111111111111111111111

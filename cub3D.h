@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:15:02 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/11 16:06:09 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:19:54 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,10 +155,16 @@ typedef struct texture_infos
 	int32_t			*img_px;
 }		t_txt_inf;
 
+// typedef struct floor_ciel_color
+// {
+// 	char **f;
+// 	char **c;
+// }	t_fcc;
 typedef struct floor_ciel_color
 {
-	char **f;
-	char **c;
+	int	r;
+	int	g;
+	int	b;
 }	t_fcc;
 
 typedef struct s_data
@@ -177,7 +183,9 @@ typedef struct s_data
 	t_wall			wall;
 	t_list			*lst;
 	t_txt_inf		*txt;
-	t_fcc			fc_color;
+	// t_fcc			fc_color;
+	t_fcc		floor;
+	t_fcc		ceil;
 }		t_data;
 
 typedef struct Colors
