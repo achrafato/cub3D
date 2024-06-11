@@ -20,7 +20,7 @@
 # include <string.h>
 # include <errno.h>
 # include <limits.h>
-# include "/Users/sdemnati/MLX42/include/MLX42/MLX42.h"
+# include "/Users/aibn-che/MLX42/include/MLX42/MLX42.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
@@ -49,10 +49,10 @@
 # define S_KEY 83
 # define W_KEY 87
 
-# define PI 3.14159265358979323846264338327950288
-# define TWO_PI (2.0 * PI)
+// # define PI 3.14159265358979323846264338327950288
+# define TWO_PI 6.2831853072
 # define CUB_SIZE 64
-# define FOV (60 * (PI / 180))
+# define FOV (60 * (M_PI / 180))
 # define MINIMAPSCALE 0.2
 # define WIDTH 1920
 # define HEIGHT 1080

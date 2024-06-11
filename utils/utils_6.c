@@ -6,25 +6,30 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:24:45 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/03 18:43:34 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 10:22:58 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
+/*
+	ray_agnle < 90 || ray_angle > 270 : right
+	
+	ray_angle > 0 && ray_angle < 180  : bottom
+*/
 mlx_texture_t	*ft_get_texture(t_data *data, t_rays *rays)
 {
 	if (rays->was_hit_vertical)
 	{
 		if (rays->ray_angle < 0.5 * M_PI || rays->ray_angle > 1.5 * M_PI)
-			return (data->pngs[0]);
-		return (data->pngs[1]);
+			return (data->pngs[EAST]);
+		return (data->pngs[WEST]);
 	}
 	else
 	{
 		if (rays->ray_angle > 0 && rays->ray_angle < M_PI)
-			return (data->pngs[2]);
-		return (data->pngs[3]);
+			return (data->pngs[NORTH]);
+		return (data->pngs[SOUTH]);
 	}
 }
 

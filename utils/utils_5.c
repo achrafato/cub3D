@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:28:24 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/04 18:53:43 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 10:15:32 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	build_walls(t_data *data, float ray_angle, t_rays *rays, int i)
 		* wall.distance_proj_plane;
 	wall.wall_strip_height = (int)wall.projected_wall_height;
 	wall.wall_top_pixel = (HEIGHT / 2) - (wall.wall_strip_height / 2);
-
 
 	//////////////////////////////////////////////////
 	img = ft_get_texture(data, rays);
