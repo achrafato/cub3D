@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:56:23 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/05 10:48:18 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:18:56 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	on_keypress(mlx_key_data_t keydata, void *data)
 	dt = (t_data *)data;
 	init_turn_and_walk_directions(dt, keydata.key);
 	if (keydata.key == 256)
-		ft_error(dt, 2, 1);
+		ft_exit(dt, "quit", 0);
 	if (keydata.key == LEFT || keydata.key == RIGHT)
 	{
 		dt->pl->rt_angle += dt->pl->turn_direc * dt->pl->rotation_speed;
@@ -124,6 +124,6 @@ void	render_loop(void *dt)
 	mlx_delete_image(data->mlx_ptr, data->img);
 	data->img = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	if (!data->img || (mlx_image_to_window(data->mlx_ptr, data->img, 0, 0) < 0))
-		ft_error(data, 2, 0);
+		ft_exit(data, "mlx_new_image failure", 1);
 	render_3d_view(data);
 }

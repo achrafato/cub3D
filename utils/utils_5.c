@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:28:24 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/11 10:15:32 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:03:30 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,6 @@ void	paint_ciel_floor(t_data *data)
 	}
 }
 
-
-    // img = ft_get_texture(cube, strip_id);
-    // img_px = (int32_t *)img->pixels;
-    // offset = (float)(img->height / strip_wall_height);
-    // xcord = get_xcord(cube, strip_id, img);
-    // ycord = (walltop_to_px - (HEIGHT / 2.0) + (strip_wall_height / 2)) * offset;
-    // if (ycord < 0)
-    //     ycord = 0;
-    // while (walltop_to_px < wallbottom_to_px)
-    // {
-    //     mlx_put_pixel(cube->img, strip_id, walltop_to_px, \
-    //         ft_reverse_color(img_px[((int)ycord * img->width) + (int)xcord]));
-    //     ycord += offset;
-    //     walltop_to_px++;
-    // }
-
 void	build_walls(t_data *data, float ray_angle, t_rays *rays, int i)
 {
 	t_wall	wall;
@@ -79,7 +63,7 @@ void	build_walls(t_data *data, float ray_angle, t_rays *rays, int i)
 
 	wall.ds = closest_wall_intersection(data, ray_angle, rays);
 	wall.perp_distance = wall.ds * cos(ray_angle - data->pl->rt_angle);
-	wall.distance_proj_plane = ((float)WIDTH / 2.0) / tan(FOV / 2);
+	wall.distance_proj_plane = ((float)WIDTH / 2.0) / tan(data->fov / 2);
 	wall.projected_wall_height = (CUB_SIZE / wall.perp_distance)
 		* wall.distance_proj_plane;
 	wall.wall_strip_height = (int)wall.projected_wall_height;
@@ -120,11 +104,11 @@ void	render_3d_view(t_data *data)
 
 	i = 0;
 	paint_ciel_floor(data);
-	ray_angle = data->pl->rt_angle - (FOV / 2);
+	ray_angle = data->pl->rt_angle - (data->fov / 2);
 	while (i < WIDTH)
 	{
 		build_walls(data, ray_angle, &rays, i);
-		ray_angle += (FOV / (float)WIDTH);
+		ray_angle += (data->fov / (float)WIDTH);
 		i++;
 	}
 }

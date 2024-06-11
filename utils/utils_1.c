@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:35:20 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/03 16:15:12 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:20:11 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ void	free_to_d_arr(char **arr)
 	free(arr);
 }
 
-// Exit the program as failure.
-void	ft_error(t_data *data, int a, int c)
+void	free_data(t_data *data)
 {
-	// char	*err;
 	int		i;
 
 	i = 0;
 	if (data)
 	{
+		if (data->pars)
+			free(data->pars);
 		if (data->arr)
 			free_to_d_arr(data->arr);
 		if (data->pl)
@@ -47,15 +47,13 @@ void	ft_error(t_data *data, int a, int c)
 		mlx_terminate(data->mlx_ptr);
 		free(data);
 	}
-	if (a == 1)
-		printf("%s\n", mlx_strerror(mlx_errno));
-	if (a == 2)
-	{
-		if (c)
-			exit(EXIT_FAILURE);
-		printf("%s\n", strerror(errno));
-	}
-	exit(EXIT_FAILURE);
+}
+
+void	ft_exit(t_data *data, char *msg, int exit_status)
+{
+	free_data(data);
+	printf("%s\n", msg);
+	exit(exit_status);
 }
 
 int	map_height(char **arr)
@@ -84,25 +82,4 @@ int	max_width(char **rows)
 		i++;
 	}
 	return (max);
-}
-
-char	**conver_to_2d_array(t_mp *lines)
-{
-	int		i;
-	int		len;
-	char	**rows;
-
-	i = 0;
-	len = stack_len(lines);
-	rows = malloc(sizeof(char *) * (len + 1));
-	if (!rows)
-		return (NULL);
-	while ((i < len) && lines)
-	{
-		rows[i] = lines->line;
-		lines = lines->next;
-		i++;
-	}
-	rows[i] = NULL;
-	return (rows);
 }

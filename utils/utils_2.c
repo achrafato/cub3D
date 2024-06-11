@@ -6,23 +6,30 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:40:48 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/04 10:53:22 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:44:01 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-int	stack_len(t_mp *lines)
+void	set_intersection_distance(t_vr_data *vr, t_hr_data *hr, t_rays *rays)
 {
-	int	i;
-
-	i = 0;
-	while (lines)
+	if (vr)
 	{
-		i++;
-		lines = lines->next;
+		rays->distance = vr->vert_hit_distance;
+		rays->was_hit_vertical = 1;
+		rays->was_hit_horizontal = 0;
+		rays->wall_hit_x = vr->wallhit_x_v;
+		rays->wall_hit_y = vr->wallhit_y_v;
 	}
-	return (i);
+	else
+	{
+		rays->distance = hr->horz_hit_distance;
+		rays->was_hit_horizontal = 1;
+		rays->was_hit_vertical = 0;
+		rays->wall_hit_x = hr->wallhit_x_h;
+		rays->wall_hit_y = hr->wallhit_y_h;
+	}
 }
 
 int	rgba(unsigned int r, unsigned int g, unsigned b, unsigned a)

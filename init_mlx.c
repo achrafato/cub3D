@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:28:26 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/05 11:03:42 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:18:56 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,14 +123,15 @@ void	fill_data(t_data *data, char **arr)
 	i = 0;
 	j = 0;
 	data->arr = arr;
+	data->fov = (60 * (M_PI / 180));
 	data->width = (WIDTH * CUB_SIZE);
 	data->height = (HEIGHT * CUB_SIZE);
 	data->mlx_ptr = mlx_init(WIDTH, HEIGHT, "cub", true);
 	if (!data->mlx_ptr)
-		ft_error(data, 1, 0);
+		ft_exit(data, "mlx failure", 1);
 	data->pl = init_player();
 	if (!data->pl)
-		ft_error(data, 2, 0);
+		ft_exit(data, "malloc failure (player)", 1);
 	player_position(arr, &j, &i, data->pl);
 	data->pl->i = i * CUB_SIZE;
 	data->pl->i += 32;
@@ -138,5 +139,5 @@ void	fill_data(t_data *data, char **arr)
 	data->pl->j += 32;
 	data->pngs = load_pictures(data);
 	if (!data->pngs)
-		ft_error(data, 2, 1);
+		ft_exit(data, "fail load pngs", 1);
 }

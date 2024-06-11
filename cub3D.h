@@ -49,10 +49,8 @@
 # define S_KEY 83
 # define W_KEY 87
 
-// # define PI 3.14159265358979323846264338327950288
 # define TWO_PI 6.2831853072
 # define CUB_SIZE 64
-# define FOV (60 * (M_PI / 180))
 # define MINIMAPSCALE 0.2
 # define WIDTH 1920
 # define HEIGHT 1080
@@ -100,6 +98,7 @@ typedef struct horizontal_data
 	float	y_to_check;
 	float	wallhit_x_h;
 	float	wallhit_y_h;
+	float	horz_hit_distance;
 	int		found_horz_wall_hit;
 }		t_hr_data;
 
@@ -117,6 +116,7 @@ typedef struct vertical_data
 	float	y_to_check;
 	float	wallhit_x_v;
 	float	wallhit_y_v;
+	float	vert_hit_distance;
 	int		found_vert_wall_hit;
 }		t_vr_data;
 
@@ -155,6 +155,7 @@ typedef struct wall_info
 
 typedef struct s_data
 {
+	float				fov;
 	mlx_t			*mlx_ptr;
 	void			*win_ptr;
 	void			*image;
@@ -200,16 +201,14 @@ typedef struct player_direction
 	int	is_ray_facing_left;
 }		t_pl_dr;
 
-
 // Utils/utils_1.c
 void	free_to_d_arr(char **arr);
-void	ft_error(t_data *data, int a, int c);
+void	ft_exit(t_data *data, char *msg, int exit_status);
 int		map_height(char **arr);
 int		max_width(char **rows);
-char	**conver_to_2d_array(t_mp *lines);
 
 // Utils/utils_2.c
-int		stack_len(t_mp *lines);
+void	set_intersection_distance(t_vr_data *vr, t_hr_data *hr, t_rays *rays);
 int		rgba(unsigned int r, unsigned int g, unsigned b, unsigned a);
 void	amend_cordinations(int *x, int *y, char **arr);
 float	distance_between_points(float x1, float y1, float x2, float y2);

@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:09:20 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/04 11:02:25 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:18:56 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	close_window(void	*dt)
 	t_data	*data;
 
 	data = (t_data *)dt;
-	ft_error(data, 2, 1);
+	ft_exit(data, "window closed successfully", 0);
 }
 
 void	render_map(char **rows, t_data *data)
@@ -67,11 +67,11 @@ void	render_map(char **rows, t_data *data)
 
 	// data = malloc(sizeof(t_data));
 	// if (!data)
-	// 	ft_error(NULL, 2, 0);
+	// 	ft_exit(NULL, 2, 0);
 	fill_data(data, rows);
 	data->img = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	if (!data->img || (mlx_image_to_window(data->mlx_ptr, data->img, 0, 0) < 0))
-		ft_error(data, 2, 0);
+		ft_exit(data, "mlx_new_image failure", 1);
 	mlx_key_hook(data->mlx_ptr, on_keypress, data);
 	mlx_loop_hook(data->mlx_ptr, render_loop, data);
 	mlx_close_hook(data->mlx_ptr, close_window, data);
@@ -88,10 +88,10 @@ t_data	*ft_init(t_data *data, char **av)
 {
 	data = malloc(sizeof(t_data));
 	if (!data)
-		ft_error(NULL, 2, 0);
+		ft_exit(NULL, "malloc failure (data)", 1);
 	data->pars = malloc(sizeof(t_pars));
 	if (!data->pars)
-		ft_error(NULL, 2, 0); // check this
+		ft_exit(data, "malloc failure (pars)", 1);
 	data->pars->c = 0;
 	data->pars->ea = 0;
 	data->pars->so = 0;
