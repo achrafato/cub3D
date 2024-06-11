@@ -1,16 +1,16 @@
 
-NO      ./textures/lol.png
+NO      ./textures/girl_with_a_pearl_earring.png
 SO      ./textures/Wheat_Field.png
 WE      ./textures/the_tower_of_babel.png
 EA      ./textures/Mona_Lisa.png
-C 1,205,236
-F 48,47,46
+C       0,0,0
+F       0,0,0
 
 
         1111111111111111111111111
         1000000000110000000000001
         1011000001110000000000001
-        10010000000000000100S0001
+        10010000000000000000W0001
 111111111011000001110000000000001
 100000000011000001110111111111111
 11110111111111011100000010001

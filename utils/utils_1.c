@@ -19,7 +19,8 @@ void	free_to_d_arr(char **arr)
 	i = 0;
 	while (arr && arr[i])
 	{
-		free(arr[i++]);
+		free(arr[i]);
+		i++;
 	}
 	free(arr);
 }
@@ -29,30 +30,34 @@ void	free_data(t_data *data)
 	int		i;
 
 	i = 0;
-	if (data)
+	if (!data)
+		return ;
+	if (data->lst)
+		ft_lstclear(&data->lst);
+	if (data->pars)
+		free(data->pars);
+	if (data->arr)
+		free_to_d_arr(data->arr);
+	if (data->pl)
+		free(data->pl);
+	if (data->pngs)
 	{
-		if (data->pars)
-			free(data->pars);
-		if (data->arr)
-			free_to_d_arr(data->arr);
-		if (data->pl)
-			free(data->pl);
-		if (data->pngs)
-		{
-			while (i < 4)
-				mlx_delete_texture(data->pngs[i++]);
-			free(data->pngs);
-		}
+		while (i < 4)
+			mlx_delete_texture(data->pngs[i++]);
+		free(data->pngs);
+	}
+	if (data->mlx_ptr)
+	{
 		mlx_delete_image(data->mlx_ptr, data->image);
 		mlx_terminate(data->mlx_ptr);
-		free(data);
 	}
+	free(data);
 }
 
 void	ft_exit(t_data *data, char *msg, int exit_status)
 {
-	free_data(data);
 	printf("%s\n", msg);
+	free_data(data);
 	exit(exit_status);
 }
 
@@ -61,7 +66,7 @@ int	map_height(char **arr)
 	int	i;
 
 	i = 0;
-	while (arr[i])
+	while (arr && arr[i])
 	{
 		i++;
 	}

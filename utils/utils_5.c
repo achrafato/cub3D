@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_5.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdemnati <salaminty123@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:28:24 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/11 16:30:37 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:40:44 by sdemnati         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,20 @@ void	paint_ciel_floor(t_data *data)
 	t_fcc	f;
 	t_fcc	c;
 
-	(1) && (f = data->floor, c = data->ceil, i = -1);
-	while (++i < (HEIGHT / 2))
+	(1) && (f = data->floor, c = data->ceil, i = 0);
+	while (i < (HEIGHT / 2))
 	{
 		j = 0;
 		while (j < WIDTH)
 			mlx_put_pixel(data->img, j++, i, rgba(c.r, c.g, c.b, 255));
+		i++;
 	}
-	while (++i < HEIGHT)
+	while (i < HEIGHT)
 	{
 		j = 0;
 		while (j < WIDTH)
 			mlx_put_pixel(data->img, j++, i, rgba(f.r, f.g, f.b, 255));
+		i++;
 	}
 }
 

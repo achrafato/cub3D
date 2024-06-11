@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdemnati <salaminty123@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:09:20 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/11 15:26:48 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:51:18 by sdemnati         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	render_map(char **rows, t_data *data)
 
 void	test_leak(void)
 {
-	system("leaks cub");
+	system("leaks cub3D");
 }
 
 t_data	*ft_init(t_data *data, char **av)
@@ -43,6 +43,7 @@ t_data	*ft_init(t_data *data, char **av)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		ft_exit(NULL, "malloc failure (data)", 1);
+	// data->pars = NULL; check this function if malloc failed here
 	data->pars = malloc(sizeof(t_pars));
 	if (!data->pars)
 		ft_exit(data, "malloc failure (pars)", 1);
@@ -53,6 +54,12 @@ t_data	*ft_init(t_data *data, char **av)
 	data->pars->we = 0;
 	data->pars->f = 0;
 	data->pars->name = av[1];
+	data->pl = NULL;
+	data->pngs = NULL;
+	data->mlx_ptr = NULL;
+	data->image = NULL;
+	data->arr = NULL;
+
 	return (data);
 }
 
@@ -63,6 +70,7 @@ int	main(int ac, char **av)
 
 	rows = NULL;
 	data = NULL;
+	// atexit(test_leak);
 	if (ac != 2)
 		return (1);
 	data = ft_init(data, av);

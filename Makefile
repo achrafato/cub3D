@@ -3,43 +3,39 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+         #
+#    By: sdemnati <salaminty123@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 18:09:04 by aibn-che          #+#    #+#              #
-#    Updated: 2024/06/11 15:25:23 by aibn-che         ###   ########.fr        #
+#    Updated: 2024/06/11 22:51:15 by sdemnati         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
-MSRCS = 	main.c		gnl/get_next_line.c		gnl/get_next_line_utils.c		init_mlx.c		utils/utils_1.c \
-			utils/utils_2.c		utils/utils_3.c		utils/utils_4.c		utils/utils_5.c		utils/utils_6.c\
-			utils/utils_7.c		parsing/parsing.c	parsing/libft.c		parsing/check_map.c \
-			parsing/direction.c 	parsing/extention.c		parsing/open_img.c \
-
-MOBJS = $(MSRCS:.c=.o)
-
-CFLAGS =  -fsanitize=address -g
-
-
-CC = cc #-Wall -Werror -Wextra
-
-rm = rm -f
-
 NAME = cub3D
-HEADERS = cub3D.h
 
-all : $(NAME)
+SRC = 		main.c				init_mlx.c\
+			utils/utils_1.c		utils/utils_2.c		utils/utils_3.c		utils/utils_4.c\
+			utils/utils_5.c		utils/utils_6.c		utils/utils_7.c\
+			parsing/parsing.c	parsing/check_map.c parsing/direction.c 	parsing/extention.c\
+			parsing/open_img.c gnl/linked_list.c	gnl/split.c gnl/get_next_line.c	gnl/libft.c\
+			gnl/get_next_line_utils.c\
 
-%.o: %.c $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@
+OBJ = $(SRC:.c=.o)
 
-$(NAME):  $(MOBJS)
-	$(CC) $(CFLAGS) $^ /Users/$(USER)/MLX42/build/libmlx42.a -Iinclude -lglfw -L"/Users/aibn-che/homebrew/opt/glfw/lib" -o $(NAME)
+CC = cc -g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra
 
-clean :
-	$(rm) $(MOBJS)
+all: $(NAME)
 
-fclean : clean
-	$(rm) $(NAME)
+$(NAME): $(OBJ)
+	$(CC) $(FLAGS) $^ /Users/$(USER)/MLX42/build/libmlx42.a -Iinclude -lglfw -L"/Users/aibn-che/homebrew/opt/glfw/lib" -o $(NAME)
 
-re : fclean $(NAME)
+%.o: %.c cub3D.h Makefile
+	$(CC) $(FLAGS) -c $< -o $@
+
+clean:
+	rm -rf $(OBJ)
+
+fclean: clean
+	rm -rf $(NAME)
+
+re: fclean all

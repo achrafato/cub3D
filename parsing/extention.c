@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extention.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdemnati <salaminty123@gmail.com>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/11 20:25:45 by sdemnati          #+#    #+#             */
+/*   Updated: 2024/06/11 23:01:21 by sdemnati         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3D.h"
 
 int	check_extention(char *str1, char *str2)
@@ -17,13 +29,13 @@ int	check_extention(char *str1, char *str2)
 	return (0);
 }
 
-char	*ft_remove_nl(char *str) // check to remove it
+char	*ft_remove_nl(char *str)
 {
 	int		i;
 	char	*line;
-	if(!str)
-		return NULL;
 
+	if (!str)
+		return (NULL);
 	i = 0;
 	line = malloc(ft_strlen(str) + 1);
 	if (!line)
@@ -36,8 +48,6 @@ char	*ft_remove_nl(char *str) // check to remove it
 	line[i] = '\0';
 	return (line);
 }
-
-
 
 int	ft_strcmp(char *s1, char *s2)
 {

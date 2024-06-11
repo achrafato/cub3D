@@ -66,9 +66,9 @@ int	hit_wall(char **arr, int x, int y, float ray_angle)
 
 	setting_pl_direction(ray_angle, &pl_dr);
 	if (pl_dr.is_ray_facing_up)
-		y -= 5;
-	else if (pl_dr.is_ray_facing_down)
 		y += 5;
+	else if (pl_dr.is_ray_facing_down)
+		y -= 5;
 	if (pl_dr.is_ray_facing_right)
 		x += 5;
 	else if (pl_dr.is_ray_facing_left)
@@ -94,7 +94,7 @@ void	on_keypress(mlx_key_data_t keydata, void *data)
 	dt = (t_data *)data;
 	init_turn_and_walk_directions(dt, keydata.key);
 	if (keydata.key == 256)
-		ft_exit(dt, "quit", 0);
+		ft_exit(dt, "QUIT", 0);
 	if (keydata.key == LEFT || keydata.key == RIGHT)
 	{
 		dt->pl->rt_angle += dt->pl->turn_direc * dt->pl->rotation_speed;
