@@ -6,19 +6,23 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:40:48 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/06/11 16:07:15 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:56:15 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
+/*
+	Down : ray > 0 && ray < 180
+	Right : ray < 90 || ray > 270
+*/
 void	setting_pl_direction(float ray_angle, t_pl_dr *pl_dr)
 {
 	int	right;
 
-	right = ray_angle < M_PI / 2 || ray_angle > 270 * (M_PI / 180);
 	pl_dr->is_ray_facing_down = ray_angle > 0 && ray_angle < M_PI;
 	pl_dr->is_ray_facing_up = !(pl_dr->is_ray_facing_down);
+	right = ray_angle < M_PI / 2 || ray_angle > 270 * (M_PI / 180);
 	pl_dr->is_ray_facing_right = right;
 	pl_dr->is_ray_facing_left = !(pl_dr->is_ray_facing_right);
 }
