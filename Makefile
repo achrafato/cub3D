@@ -3,34 +3,34 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+         #
+#    By: sdemnati <salaminty123@gmail.com>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 18:09:04 by aibn-che          #+#    #+#              #
-#    Updated: 2024/05/30 10:47:08 by aibn-che         ###   ########.fr        #
+#    Updated: 2024/06/13 10:20:26 by sdemnati         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
 NAME = cub3D
-OBJ =		gnl/get_next_line.o		gnl/get_next_line_utils.o		init_mlx.o		utils/utils_1.o \
-			utils/utils_2.o		utils/utils_3.o		utils/utils_4.o		\
-			parsing/parsing.o	parsing/libft.o		parsing/check_map.o \
-			parsing/direction.o 	parsing/extention.o		parsing/open_img.o \
-			main.o \
 
+SRC = 		main.c				init_mlx.c\
+			utils/utils_1.c		utils/utils_2.c		utils/utils_3.c		utils/utils_4.c \
+			utils/utils_5.c		utils/utils_6.c		utils/utils_7.c \
+			parsing/parsing.c	parsing/check_map.c parsing/direction.c 	parsing/extention.c \
+			parsing/open_img.c gnl/linked_list.c	gnl/split.c gnl/get_next_line.c	gnl/libft.c \
+			gnl/get_next_line_utils.c \
 
-CC = cc -fsanitize=address -g
-# FLAGS = -Wall -Werror -Wextra
+OBJ = $(SRC:.c=.o)
 
+CC = cc
+FLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT_SRCS)
-	$(CC) $(CFLAGS) $^ /Users/$(USER)/MLX42/build/libmlx42.a -Iinclude -lglfw -L"/Users/$(USER)/homebrew/opt/glfw/lib/" -o $(NAME)
-
+$(NAME): $(OBJ)
+	$(CC) $(FLAGS) $^ /Users/$(USER)/MLX42/build/libmlx42.a -Iinclude -lglfw -L"/Users/aibn-che/homebrew/opt/glfw/lib" -o $(NAME)
 
 %.o: %.c cub3D.h Makefile
-	$(CC) $(FLAGS)  -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ)

@@ -6,7 +6,7 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:35:20 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/05/30 11:51:16 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:20:11 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,33 +19,46 @@ void	free_to_d_arr(char **arr)
 	i = 0;
 	while (arr && arr[i])
 	{
-		free(arr[i++]);
+		free(arr[i]);
+		i++;
 	}
 	free(arr);
 }
 
-// Exit the program as failure.
-void	ft_error(t_data *data, int a, int c)
+void	free_data(t_data *data)
 {
-	char	*err;
+	int		i;
 
-	if (data)
+	i = 0;
+	if (!data)
+		return ;
+	if (data->lst)
+		ft_lstclear(&data->lst);
+	if (data->pars)
+		free(data->pars);
+	if (data->arr)
+		free_to_d_arr(data->arr);
+	if (data->pl)
+		free(data->pl);
+	if (data->pngs)
 	{
-		if (data->arr)
-			free_to_d_arr(data->arr);
-		if (data->pl)
-			free(data->pl);
-		free(data);
+		while (i < 4)
+			mlx_delete_texture(data->pngs[i++]);
+		free(data->pngs);
 	}
-	if (a == 1)
-		printf("%s\n", mlx_strerror(mlx_errno));
-	if (a == 2)
+	if (data->mlx_ptr)
 	{
-		if (c)
-			exit(EXIT_SUCCESS);
-		printf("%s\n", strerror(errno));
+		mlx_delete_image(data->mlx_ptr, data->image);
+		mlx_terminate(data->mlx_ptr);
 	}
-	exit(EXIT_FAILURE);
+	free(data);
+}
+
+void	ft_exit(t_data *data, char *msg, int exit_status)
+{
+	printf("%s\n", msg);
+	free_data(data);
+	exit(exit_status);
 }
 
 int	map_height(char **arr)
@@ -53,7 +66,7 @@ int	map_height(char **arr)
 	int	i;
 
 	i = 0;
-	while (arr[i])
+	while (arr && arr[i])
 	{
 		i++;
 	}
@@ -74,25 +87,4 @@ int	max_width(char **rows)
 		i++;
 	}
 	return (max);
-}
-
-char	**conver_to_2d_array(t_mp *lines)
-{
-	int		i;
-	int		len;
-	char	**rows;
-
-	i = 0;
-	len = stack_len(lines);
-	rows = malloc(sizeof(char *) * (len + 1));
-	if (!rows)
-		return (NULL);
-	while ((i < len) && lines)
-	{
-		rows[i] = lines->line;
-		lines = lines->next;
-		i++;
-	}
-	rows[i] = NULL;
-	return (rows);
 }

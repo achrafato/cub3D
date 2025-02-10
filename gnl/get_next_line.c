@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sdemnati <salaminty123@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:52:19 by aibn-che          #+#    #+#             */
-/*   Updated: 2023/12/06 17:33:49 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:48:11 by sdemnati         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "get_next_line.h"
 #include "../cub3D.h"
 
 void	mingle_data(char **container, char **buffer, char **keeper)

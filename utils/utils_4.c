@@ -6,29 +6,18 @@
 /*   By: aibn-che <aibn-che@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:18:49 by aibn-che          #+#    #+#             */
-/*   Updated: 2024/05/31 16:44:31 by aibn-che         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:42:37 by aibn-che         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
-
-void	setting_pl_direction(float ray_angle, t_pl_dr *pl_dr)
-{
-	int	right;
-
-	right = ray_angle < M_PI / 2 || ray_angle > 270 * (M_PI / 180);
-	pl_dr->is_ray_facing_down = ray_angle > 0 && ray_angle < M_PI;
-	pl_dr->is_ray_facing_up = !(pl_dr->is_ray_facing_down);
-	pl_dr->is_ray_facing_right = right;
-	pl_dr->is_ray_facing_left = !(pl_dr->is_ray_facing_right);
-}
 
 /*
 	calculate the distance between each horizontal point
 		* ystep : represent the next Vertical step
 		* xstep : represent the next Horizontal step
 
-	found_horz_wall_hit : this var indicate whether or not player
+	was_hit_horizontal : this var indicate whether or not player
 						is collided with wall
 */
 void	calc_dis_bt_ech_hr_point(t_pl_dr pl_dr, float ray_angle, t_hr_data *hr)
@@ -138,102 +127,23 @@ float	closest_wall_intersection(t_data *data, float ray_angle, t_rays *rays)
 	t_hr_data	hr;
 	t_vr_data	vr;
 	t_pl_dr		pl_dr;
-	float		horz_hit_distance;
-	float		vert_hit_distance;
 
-	horz_hit_distance = FLT_MAX;
-	vert_hit_distance = FLT_MAX;
+	hr.horz_hit_distance = MAXFLOAT;
+	vr.vert_hit_distance = MAXFLOAT;
 	ray_angle = normalize_angle(ray_angle);
 	setting_pl_direction(ray_angle, &pl_dr);
 	measuring_hr_intersection(data, ray_angle, pl_dr, &hr);
 	measuring_vr_intersection(data, ray_angle, pl_dr, &vr);
 	if (hr.found_horz_wall_hit)
-		horz_hit_distance = distance_between_points(hr.px, hr.py, \
+		hr.horz_hit_distance = distance_between_points(hr.px, hr.py, \
 		hr.wallhit_x_h, hr.wallhit_y_h);
 	if (vr.found_vert_wall_hit)
-		vert_hit_distance = distance_between_points(vr.px, vr.py, \
+		vr.vert_hit_distance = distance_between_points(vr.px, vr.py, \
 		vr.wallhit_x_v, vr.wallhit_y_v);
-	if (vert_hit_distance < horz_hit_distance)
-		rays->distance = vert_hit_distance;
+	if (vr.vert_hit_distance < hr.horz_hit_distance)
+		set_intersection_distance(&vr, NULL, rays);
 	else
-		rays->distance = horz_hit_distance;
+		set_intersection_distance(NULL, &hr, rays);
+	rays->ray_angle = ray_angle;
 	return (rays->distance);
-}
-
-void	build_walls(t_data *data, float ray_angle, t_rays *rays, int i)
-{
-	int		wall_strip_height;
-	int		wall_top_pixel;
-	int		wall_bottom_pixel;
-	float	perp_distance;
-	float	distance_proj_plane;
-	float	projected_wall_height;
-	int		ds;
-
-	ds = closest_wall_intersection(data, ray_angle, rays);
-	perp_distance = ds * cos(ray_angle - data->pl->rotation_angle);
-	distance_proj_plane = ((float)WIDTH / 2.0) / tan(FOV / 2);
-	projected_wall_height = (CUB_SIZE / perp_distance) * distance_proj_plane;
-	wall_strip_height = (int)projected_wall_height;
-	wall_top_pixel = (HEIGHT / 2) - (wall_strip_height / 2);
-	if (wall_top_pixel < 0)
-		wall_top_pixel = 0;
-	wall_bottom_pixel = (HEIGHT / 2) + (wall_strip_height / 2);
-	if (wall_bottom_pixel > HEIGHT)
-		wall_bottom_pixel = HEIGHT;
-	while (wall_top_pixel < wall_bottom_pixel)
-	{
-		mlx_put_pixel(data->img, i, wall_top_pixel, \
-		rgba(146, 192,132, 100));
-		wall_top_pixel++;
-	}
-}
-
-void	paint_ciel_floor(t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < (HEIGHT / 2))
-	{
-		j = 0;
-		while (j < WIDTH)
-		{
-			mlx_put_pixel(data->img, j, i,rgba(121,205,236, 220));
-			j++;
-		}
-		i++;
-	}
-	while (i < HEIGHT)
-	{
-		j = 0;
-		while (j < WIDTH)
-		{
-			mlx_put_pixel(data->img, j, i,rgba(48,47,46, 255));
-			j++;
-		}
-		i++;
-	}
-}
-
-void	render_3d_view(t_data *data)
-{
-	int		i;
-	t_rays	*rays;
-	float	ray_angle;
-
-	i = 0;
-
-	paint_ciel_floor(data);
-	rays = malloc(sizeof(t_rays));
-	if (!rays)
-		return ;
-	ray_angle = data->pl->rotation_angle - (FOV / 2);
-	while (i < WIDTH)
-	{
-		build_walls(data, ray_angle, rays, i);
-		ray_angle += (FOV / (float)WIDTH);
-		i++;
-	}
 }

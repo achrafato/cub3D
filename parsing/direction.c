@@ -1,59 +1,85 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   direction.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sdemnati <salaminty123@gmail.com>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/11 20:25:37 by sdemnati          #+#    #+#             */
+/*   Updated: 2024/06/13 10:02:55 by sdemnati         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3D.h"
 
-void ft_check_duplicate(char *str, t_pars *pars)
+void	ft_check_duplicate(char *str, t_pars *pars)
 {
-	if(!ft_strcmp(str, "NO"))
+	if (!str)
+		return ;
+	if (!ft_strcmp(str, "NO"))
 		pars->no++;
-	if(!ft_strcmp(str, "SO"))
+	if (!ft_strcmp(str, "SO"))
 		pars->so++;
-	if(!ft_strcmp(str, "WE"))
+	if (!ft_strcmp(str, "WE"))
 		pars->we++;
-	if(!ft_strcmp(str, "EA"))
+	if (!ft_strcmp(str, "EA"))
 		pars->ea++;
-	if(!ft_strcmp(str, "F"))
+	if (!ft_strcmp(str, "F"))
 		pars->f++;
-	if(!ft_strcmp(str, "C"))
+	if (!ft_strcmp(str, "C"))
 		pars->c++;
 }
+
 void	ft_stor_direction(char *line, t_data *data)
 {
-	char **arr;
-	t_list *tmp;
-	tmp = data->lst;
+	int		i;
+	int		j;
+	char	*dir;
+	t_list	*tmp;
+	char	*path;
 
-	arr = ft_split(line, ' ');
-	if (!arr)
-		return ;
-	if (arr && arr[2]) //try to add character in the begining
-		(write(2, "Error Invalid len\n", 17), exit(1));
-	tmp = ft_lstnew(arr);
+	i = 0;
+	j = 0;
+	while (line && line[i] && line[i] == 32)
+		i++;
+	j = i;
+	while (line && line[i] && line[i] != 32)
+		i++;
+	dir = ft_substr(line, j, i - j);
+	ft_check_duplicate(dir, data->pars);
+	while (line && line[i] && line[i] == 32)
+		i++;
+	j = i;
+	while (line && line[i])
+		i++;
+	path = ft_substr(line, j, i - j);
+	tmp = ft_lstnew(dir, path);
 	if (!tmp)
-		return ;
-	ft_check_duplicate(tmp->type, data->pars);
+		ft_exit(data, "Error\nMalloc Failed", 1);
 	ft_lstadd_back(&data->lst, tmp);
 }
 
-
-void ft_check_direction(char **arr, t_data *data)
+void	ft_check_direction(t_data *data)
 {
-	char *line;
-	char *tmp;
-	data->lst = NULL;
+	char	*line;
+	char	*tmp;
+	int		i;
 
+	data->pars->len = 0;
 	line = get_next_line(data->pars->fd);
-	while(line)
+	while (line)
 	{
+		i = 0;
 		tmp = ft_remove_nl(line);
-		free(line);
-		if(tmp && *tmp && ft_isalpha(*tmp))
+		while (tmp && tmp[i] && tmp[i] == 32)
+			i++;
+		if (tmp && tmp[i] && ft_isalpha(tmp[i]))
 			ft_stor_direction(tmp, data);
+		(free(tmp), free(line));
 		line = get_next_line(data->pars->fd);
 	}
 	if (data->pars->c != 1 || data->pars->f != 1 || data->pars->so != 1
 		|| data->pars->we != 1 || data->pars->ea != 1 || data->pars->no != 1)
-			(write(2, "not 21\n", 7), exit(1));
-	close(data->pars->fd);
-	data->pars->fd = open(data->pars->name, O_RDONLY);
-	if(data->pars->fd == -1)
-		(write(2, "Error during opening file\n", 26), exit(1));
+		ft_exit(data, "Error\nNot a Direction", 1);
+	ft_close_open(data);
 }
