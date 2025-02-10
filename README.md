@@ -109,7 +109,7 @@ make re     # Recompile
 - `A/D`: Strafe left/right
 - `←/→`: Rotate camera
 - `ESC`: Exit game
-- `M`: Toggle minimap
+
 
 ## ⚠️ Error Handling
 
