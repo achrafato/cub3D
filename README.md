@@ -143,6 +143,11 @@ Test maps are provided in the `maps/` directory:
 - `map1.cub`: Complex layout
 - `map2.cub`: Advanced features
 
+#
+![Uploading ScreenRecording2025-02-10at11-ezgif.com-video-to-gif-converter.gif…]()
+
+#
+
 ## 📜 License
 
 This project is part of the 42 curriculum and is provided as-is.
