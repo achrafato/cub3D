@@ -144,7 +144,8 @@ Test maps are provided in the `maps/` directory:
 - `map2.cub`: Advanced features
 
 #
-![Uploading ScreenRecording2025-02-10at11-ezgif.com-video-to-gif-converter.gif…]()
+![Uploading game show.gif…]()
+
 
 #
 
