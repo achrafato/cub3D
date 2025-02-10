@@ -14,7 +14,7 @@
 
 void	close_window(void	*dt)
 {
-	t_data	*data;
+	t_data	*data; 
 
 	data = (t_data *)dt;
 	ft_exit(data, "window closed successfully", 0);
