@@ -144,8 +144,7 @@ Test maps are provided in the `maps/` directory:
 - `map2.cub`: Advanced features
 
 #
-![Uploading game show.gif…]()
-
+![game show](https://github.com/user-attachments/assets/9f8212ad-e542-4c0e-b5c6-1d40015faeec)
 
 #
 
